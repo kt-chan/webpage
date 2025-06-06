@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>高精准、有约束性RAG智能检索方案概览</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;family=Noto+Sans+SC:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+body {
+font-family: 'Inter', 'Noto Sans SC', sans-serif;
+}
+.chart-container {
+position: relative;
+width: 100%;
+max-width: 600px;
+margin-left: auto;
+margin-right: auto;
+height: 300px;
+max-height: 400px;
+}
+@media (min-width: 768px) {
+.chart-container {
+height: 350px;
+}
+}
+.flow-arrow {
+font-size: 2rem;
+color: #007991;
+line-height: 1;
+}
+.flow-box {
+border: 2px solid #00CECB;
+background-color: #f0fdfa;
+}
+.flow-line {
+width: 2px;
+background-color: #007991;
+flex-grow: 1;
+}
+.circular-flow-item {
+position: absolute;
+width: 100px;
+height: 100px;
+display: flex;
+align-items: center;
+justify-content: center;
+text-align: center;
+font-size: 0.875rem;
+}
+.circular-flow-arrow {
+position: absolute;
+font-size: 1.5rem;
+color: #007991;
+}
+</style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+<header class="bg-white shadow-md">
+    <div class="container mx-auto px-6 py-8 text-center">
+        <h1 class="text-3xl md:text-4xl font-bold text-[#007991]">香港医院管理局RAG智能检索方案</h1>
+        <p class="mt-2 text-lg text-slate-600">关键技术与实施路径概览</p>
+    </div>
+</header>
+
+<main class="container mx-auto p-4 md:p-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+        <div class="lg:col-span-3 bg-white rounded-lg shadow-md p-6">
+			<h2 class="text-center mt-2 text-xl font-semibold text-[#007991]  mb-6">课程目标</h2>
+			<h3 class="text-x2 font-bold text-center text-[#007991] mb-6">华为与医管局联合探索出一套技术可行、精准可靠、符合监管要求的智能检索解决方案技术蓝图</h3>
+            <p class="justify-center text-slate-600 mb-6">本项目致力于为香港医院管理局打造高精准度、具备约束性的检索增强生成（RAG）智能检索方案，旨在验证大模型技术及解决方案的可行性。项目核心目标是助力医管局开发精准的医学RAG系统，该系统将严格依据提供的医疗参考文件生成回答，并支持标量与向量融合检索。项目赋能后，预期医管局学员将掌握实现高精准度生成的方法论与基础技术能力。</p>
+
+			<h3 class="mt-2 text-xl font-semibold text-[#007991]  mb-6">本课程覆盖以下5大课题：</h3>
+			<ul">
+				<li class="mb-2">课题1：基础基础 - 大模型核心挑战与昇腾技术基石</li>
+				<li class="mb-2">课题2：知识管理 - 构建精准医学RAG知识库方案</li>
+				<li class="mb-2">课题3：模型微调 - 构建医疗领域模型的微调与能力校验</li>
+				<li class="mb-2">课题4：内容生成 - 应用工作流与合规性管控</li>
+				<li class="mb-2">课题5：未来联合创新方向规划 - 共建智慧医疗</li>
+			</ul>
+        </div>
+        
+        
+        <div class="bg-white rounded-lg shadow-md p-6 flex flex-col items-center justify-center text-center">
+            <div class="text-6xl font-bold text-[#FF5E5B]">75%</div>
+            <h3 class="mt-2 text-xl font-semibold text-[#007991]">减少模型幻觉</h3>
+            <p class="mt-2 text-slate-600">通过强制模型回答基于检索到的医疗文档，RAG系统旨在将事实不准确性降至最低，大幅提升回答的可靠性。</p>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6 flex flex-col items-center justify-center text-center">
+            <div class="text-6xl font-bold text-[#00CECB]">100%</div>
+            <h3 class="mt-2 text-xl font-semibold text-[#007991]">内容可追溯</h3>
+            <p class="mt-2 text-slate-600">系统生成的每一条关键信息都将附带明确的来源引用，确保所有回答都有据可查，符合医疗领域的严格合规要求。</p>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-md p-6 flex flex-col items-center justify-center text-center">
+            <div class="text-6xl font-bold text-[#FFED66]">50%</div>
+            <h3 class="mt-2 text-xl font-semibold text-[#007991]">提升检索效率</h3>
+            <p class="mt-2 text-slate-600">结合向量与标量（关键词）的混合检索技术，能够更精准、高效地从海量医疗文献中定位相关信息。</p>
+        </div>
+
+        <div class="lg:col-span-3 bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-2xl font-bold text-[#007991] mb-4">课题1：基础基础 - 大模型核心挑战与昇腾技术基石</h2>
+            <p class="text-slate-600">大模型技术和华为昇腾技术科普：大模型技术通过构建和训练具有海量参数的深度学习模型，以实现复杂任务的高性能处理。这些模型通常在大规模数据集上进行训练，能够捕捉数据中的复杂模式和关系，从而在自然语言处理、计算机视觉等领域展现出强大的性能。大模型技术的关键在于模型的规模和复杂性，以及高效的训练和推理算法，以确保模型在实际应用中的可行性和效率。华为昇腾AI全栈解决方案是一个基于昇腾系列AI处理器（如昇腾910和昇腾310）构建的综合AI计算基础设施和应用。昇腾处理器专为高性能计算设计，适用于模型训练和推理等高要求AI任务,通过加速大型模型并行计算和软硬件协同来释放强大计算能力，同时提供易用性和开放生态，为AI应用的广泛部署和高效运行奠定了坚实基础。</p>
+        </div>
+		
+
+		<div class="lg:col-span-3 bg-white rounded-lg shadow-md p-6">
+		<h3 class="text-xl font-bold text-center text-[#007991] mb-6">大模型技术基础</h3>
+		<p class="text-slate-600 text-center mb-6">大模型通过构建和训练具有海量参数的深度学习模型，以实现复杂任务的高性能处理。这些模型通常在大规模数据集上进行训练，能够捕捉数据中的复杂模式和关系，从而在自然语言处理、计算机视觉等领域展现出强大的性能。通过构建和训练具有海量参数的深度学习模型，以实现复杂任务的高性能处理。这些模型通常在大规模数据集上进行训练，能够捕捉数据中的复杂模式和关系，从而在自然语言处理、计算机视觉等领域展现出强大的性能。大模型技术的关键在于模型的规模和复杂性，以及高效的训练和推理算法，以确保模型在实际应用中的可行性和效率。</p>
+
+		<div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch"> 
+			<div class="bg-white rounded-xl p-6 shadow-lg border border-gray-200">
+				<h3 class="text-2xl font-bold text-center text-[#FF9800] mb-4">核心规模指标</h3>
+				<p class="text-gray-700 mb-6 text-center">模型训练的注意力机制是奠定大模型基础的关键技术，使模型能够动态地分配注意力权重，专注于输入数据中最重要的部分。大模型强大性能源于其庞大的参数量和训练数据规模，使其能够学习并泛化更复杂的模式。</p>
+				<div class="flex flex-col items-center justify-center space-y-6">
+					<div class="text-center">
+						<p class="text-5xl md:text-6xl font-extrabold text-[#FFC107]">数十亿至万亿+</p>
+						<p class="text-lg text-gray-600 mt-2">模型参数</p>
+					</div>
+					<div class="text-center">
+						<p class="text-5xl md:text-6xl font-extrabold text-[#4CAF50]">TB级至PB级</p>
+						<p class="text-lg text-gray-600 mt-2">训练数据量</p>
+					</div>
+				</div>
+				<p class="mt-6 text-center text-gray-700">规模的持续增长是推动大模型能力进步的关键。</p>
+			</div>
+
+			<div class="bg-white rounded-xl p-6 shadow-lg border border-gray-200">
+				<h3 class="text-2xl font-bold text-center text-[#FF9800] mb-4">工作原理简述</h3>
+				<p class="text-gray-700 mb-6 text-center">大模型是基于深度学习技术构建的具有海量参数的人工智能模型。它通过在大规模数据上进行训练，学习到复杂的语言模式和语义关系，从而能够生成或理解自然语言文本。大模型的规模通常以数十亿甚至数千亿参数来衡量，这使得它们具备强大的语言生成和理解能力。</p>
+				<div class="flex flex-col md:flex-row items-center justify-around">
+					<div class="flex flex-col items-center p-4 bg-gray-100 rounded-lg shadow-inner">
+						<span class="text-5xl mb-2">💾</span>
+						<p class="text-lg text-gray-800">海量数据</p>
+						<p class="text-sm text-gray-500">(文本、图像、代码)</p>
+					</div>
+					<div class="flow-arrow hidden md:block">→</div>
+					<div class="flex flex-col items-center p-4 bg-gray-100 rounded-lg shadow-inner">
+						<span class="text-5xl mb-2">🧠</span>
+						<p class="text-lg text-gray-800">大模型</p>
+						<p class="text-sm text-gray-500">(深度学习)</p>
+					</div>
+					<div class="flow-arrow hidden md:block">→</div>
+					<div class="flex flex-col items-center p-4 bg-gray-100 rounded-lg shadow-inner">
+						<span class="text-5xl mb-2">💡</span>
+						<p class="text-lg text-gray-800">复杂任务输出</p>
+						<p class="text-sm text-gray-500">(生成、识别、决策)</p>
+					</div>
+				</div>
+				<p class="mt-6 text-center text-gray-700">从原始数据到智能输出，大模型是核心处理引擎。</p>
+			</div>
+		</div>
+	</div>
+
+        
+        <div class="lg:col-span-3 bg-white rounded-lg shadow-md p-6">
+            <h3 class="text-xl font-bold text-center text-[#007991] mb-6">昇腾AI全栈解决方案：端到端的技术支持</h3>
+            <p class="text-slate-600 text-center mb-6">本项目将依托华为昇腾AI全栈解决方案，该方案提供了从底层硬件到上层应用开发所需的全套工具链，为高性能医学模型的训练、微调与推理提供坚实基础。</p>
+            <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-4">
+                <div class="text-center p-4 rounded-lg flow-box w-full md:w-1/4">
+                    <h4 class="font-bold text-lg">昇腾AI处理器</h4>
+                    <p class="text-sm">提供核心算力</p>
+                </div>
+                <div class="flow-arrow hidden md:block">→</div>
+                <div class="flow-arrow block md:hidden">↓</div>
+                <div class="text-center p-4 rounded-lg flow-box w-full md:w-1/4">
+                    <h4 class="font-bold text-lg">CANN</h4>
+                    <p class="text-sm">异构计算架构</p>
+                </div>
+                <div class="flow-arrow hidden md:block">→</div>
+                <div class="flow-arrow block md:hidden">↓</div>
+                <div class="text-center p-4 rounded-lg flow-box w-full md:w-1/4">
+                    <h4 class="font-bold text-lg">PyTorch + PTAdaptor</h4>
+                    <p class="text-sm">AI开发框架</p>
+                </div>
+                 <div class="flow-arrow hidden md:block">→</div>
+                <div class="flow-arrow block md:hidden">↓</div>
+                <div class="text-center p-4 rounded-lg flow-box w-full md:w-1/4">
+                    <h4 class="font-bold text-lg">MindStudio / OSS Tools</h4>
+                    <p class="text-sm">一站式开发工具</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="lg:col-span-3 bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-2xl font-bold text-[#007991] mb-4">课题2：知识管理 - 构建精准医学RAG知识库方案</h2>
+            <p class="text-slate-600">医疗文档（如临床指南、研究报告）通常包含文本、表格、图表等复杂结构。为了让AI准确理解这些信息，必须采用先进的文档处理技术。这不仅是简单的文本提取，更是对知识进行结构化、语义化的深度解析，是实现高精准检索的第一步。</p>
+        </div>
+
+        <div class="md:col-span-1 lg:col-span-2 bg-white rounded-lg shadow-md p-6">
+            <h3 class="text-xl font-bold text-center text-[#007991] mb-6">高级文档处理流程</h3>
+            <div class="flex flex-col items-center">
+                <div class="flow-box p-4 rounded-lg text-center w-3/4">
+                    <h4 class="font-semibold">原始医疗PDF文档</h4>
+                </div>
+                <div class="h-8 w-px bg-[#007991]"></div>
+                <div class="text-[#007991]">↓</div>
+                <div class="h-8 w-px bg-[#007991]"></div>
+                <div class="flow-box p-4 rounded-lg text-center w-3/4">
+                    <h4 class="font-semibold">布局感知解析与表格提取</h4>
+                    <p class="text-sm">识别标题、段落、列表，并精确提取表格数据</p>
+                </div>
+                <div class="h-8 w-px bg-[#007991]"></div>
+                <div class="text-[#007991]">↓</div>
+                <div class="h-8 w-px bg-[#007991]"></div>
+                <div class="flow-box p-4 rounded-lg text-center w-3/4">
+                    <h4 class="font-semibold">语义分块</h4>
+                    <p class="text-sm">按逻辑和上下文完整性切分知识，而非固定长度</p>
+                </div>
+                <div class="h-8 w-px bg-[#007991]"></div>
+                <div class="text-[#007991]">↓</div>
+                <div class="h-8 w-px bg-[#007991]"></div>
+                <div class="flow-box p-4 rounded-lg text-center w-3/4">
+                    <h4 class="font-semibold">向量化并存入数据库</h4>
+                    <p class="text-sm">将知识块转换为向量，用于高效检索</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <h3 class="text-xl font-bold text-center text-[#007991] mb-4">医疗文档结构组成</h3>
+            <p class="text-slate-600 mb-4 text-center">准确识别并处理不同的内容类型是保证信息完整性的关键。</p>
+            <div class="chart-container h-[350px] md:h-[400px]">
+                <canvas id="docCompositionChart"></canvas>
+            </div>
+        </div>
+
+        
+
+        <div class="lg:col-span-3 bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-2xl font-bold text-[#007991] mb-4">课题3：模型微调 - 构建医疗领域模型的微调与能力校验</h2>
+            <p class="text-slate-600">通用的LLM缺乏专业医学知识。因此，关键步骤是使用从医疗文档中提炼的高质量数据集，对模型（如DeepSeek Llama 70B）进行监督式微调（SFT）。这将把一个“通才”模型，转变为一个精通医学术语、理解临床逻辑的“专才”模型。同时，建立严谨的评估体系，是确保模型准确、可靠的必要保障。</p>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6">
+             <h3 class="text-xl font-bold text-center text-[#007991] mb-4">模型能力对比：通用 vs. 医疗微调</h3>
+             <p class="text-slate-600 mb-4 text-center">微调旨在全面提升模型在医疗领域的各项关键能力。</p>
+            <div class="chart-container h-[350px] md:h-[400px]">
+                <canvas id="modelComparisonChart"></canvas>
+            </div>
+        </div>
+
+        <div class="md:col-span-1 lg:col-span-2 bg-white rounded-lg shadow-md p-6">
+            <h3 class="text-xl font-bold text-center text-[#007991] mb-4">多维度评估框架</h3>
+            <p class="text-slate-600 mb-4 text-center">我们采用综合评估方法，结合自动化基准测试与专家人工审查，确保模型的全面性能。</p>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr>
+                            <th class="py-2 px-4 bg-slate-100 border-b-2 border-slate-200 font-bold text-[#007991]">评估指标</th>
+                            <th class="py-2 px-4 bg-slate-100 border-b-2 border-slate-200 font-bold text-[#007991]">衡量内容</th>
+                            <th class="py-2 px-4 bg-slate-100 border-b-2 border-slate-200 font-bold text-[#007991]">对医疗AI的重要性</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="hover:bg-slate-50">
+                            <td class="py-2 px-4 border-b border-slate-200">答案相关性</td>
+                            <td class="py-2 px-4 border-b border-slate-200">回答是否直接、简洁地解决用户问题</td>
+                            <td class="py-2 px-4 border-b border-slate-200">确保临床问答的高效性</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="py-2 px-4 border-b border-slate-200">上下文精确度</td>
+                            <td class="py-2 px-4 border-b border-slate-200">检索到的文档片段是否与问题相关</td>
+                            <td class="py-2 px-4 border-b border-slate-200">RAG系统性能的基础</td>
+                        </tr>
+                         <tr class="hover:bg-slate-50">
+                            <td class="py-2 px-4 border-b border-slate-200">忠实度</td>
+                            <td class="py-2 px-4 border-b border-slate-200">答案是否完全基于提供的参考内容</td>
+                            <td class="py-2 px-4 border-b border-slate-200">防止模型幻觉的核心指标</td>
+                        </tr>
+                         <tr class="hover:bg-slate-50">
+                            <td class="py-2 px-4 border-b border-slate-200">LLM作为评估器</td>
+                            <td class="py-2 px-4 border-b border-slate-200">使用另一LLM评估答案的逻辑和事实</td>
+                            <td class="py-2 px-4 border-b border-slate-200">模拟人类专家判断，进行深度评估</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="lg:col-span-3 bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-2xl font-bold text-[#007991] mb-4">课题4：内容生成 - 应用工作流与合规性管控</h2>
+            <p class="text-slate-600 mb-6">最终的应用不仅是一个简单的问答界面，而是一个包含多级处理和严格验证的复杂工作流。从用户输入查询开始，系统会通过查询扩展、混合检索、思维链提示等技术生成初步回答，然后经过多重合规性“关卡”的检验，最终呈现给用户一个既准确又附带清晰引用的可靠答案。同时，建立持续的反馈闭环，是系统不断自我优化的关键。</p>
+		</div>
+		<div class="lg:col-span-3 bg-white rounded-lg shadow-md p-6">
+            <h3 class="text-xl font-bold text-center text-[#007991] mb-6">有约束性的RAG应用工作流</h3>
+			
+            <div class="w-full overflow-x-auto p-4">
+                 <div class="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0 text-center text-sm">
+                    <div class="flow-box p-3 rounded-lg w-full md:w-1/6"><p>用户查询</p></div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-box p-3 rounded-lg w-full md:w-1/6"><p>查询扩展与混合检索</p></div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-box p-3 rounded-lg w-full md:w-1/6"><p>思维链提示工程</p></div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-box p-3 rounded-lg w-full md:w-1/6"><p>LLM生成回答</p></div>
+                    <div class="flow-arrow">→</div>
+                    <div class="p-3 rounded-lg w-full md:w-1/6 border-2 border-dashed border-red-400 bg-red-50">
+                        <p class="font-bold">合规过滤</p>
+                        <p class="text-xs">事实/引用/安全检查</p>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-box p-3 rounded-lg w-full md:w-1/6 bg-emerald-50 border-emerald-400"><p class="font-bold">最终答案与引用</p></div>
+                </div>
+            
+			</div>
+		</div>
+		<div class="lg:col-span-3 bg-white rounded-lg shadow-md p-6">
+			
+			<h3 class="text-xl font-bold text-center text-[#007991] mb-6">持续改进的反馈闭环</h3>
+			 <p class="text-slate-600 mb-8 text-center">高质量的AI系统需要持续迭代。我们设计的反馈闭环将结合用户反馈和领域专家审查，不断优化数据、模型和检索策略，确保系统能适应 evolving的医疗知识和用户需求。</p>
+			<div class="relative w-full h-10 flex items-center justify-center mb-6"></div>
+			<div class="relative w-full h-80 flex items-center justify-center mb-6">
+				<div class="absolute w-64 h-64 border-2 border-dashed border-[#007991] rounded-full"></div>
+				<div class="circular-flow-item flow-box rounded-full" style="top: 0; left: 50%; transform: translate(-50%, -50%);">用户反馈<br/>(显式/隐式)</div>
+				<div class="circular-flow-arrow" style="top: 15%; right: 40%; transform: rotate(-45deg);">⤵</div>
+
+				<div class="circular-flow-item flow-box rounded-full" style="top: 50%; right: 35%; transform: translate(50%, -50%);">领域专家审查<br/>(HITL)</div>
+				 <div class="circular-flow-arrow" style="bottom: 15%; right: 40%; transform: rotate(65deg);">⤵</div>
+
+				<div class="circular-flow-item flow-box rounded-full" style="bottom: 0; left: 50%; transform: translate(-50%, 50%);">数据增强与模型重训练</div>
+				<div class="circular-flow-arrow" style="bottom: 15%; left: 40%; transform: rotate(175deg);">⤵</div>
+
+				<div class="circular-flow-item flow-box rounded-full" style="top: 50%; left: 35%; transform: translate(-50%, -50%);">优化检索与提示策略</div>
+				<div class="circular-flow-arrow" style="top: 15%; left: 40%; transform: rotate(235deg);">⤵</div>
+			</div>
+			<div class="relative w-full h-10 flex items-center justify-center mb-6"></div>
+		
+		</div>
+
+        <div class="lg:col-span-3 bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-2xl font-bold text-[#007991] mb-4">课题5：未来联合创新方向规划 - 共建智慧医疗</h2>
+            <p class="text-slate-600 mb-6">未来联合创新方向聚焦于医学知识图谱与医学多模态融合检索。医学知识图谱构建结构化知识基础，助力LLM明确医疗概念，降低幻觉风险，提升临床决策支持能力；医学多模态融合检索整合异构数据，打破信息孤岛，为医生提供全面患者视图，提升诊断效率与准确性，推动个性化医疗发展。这两种创新方向的联合，能够充分发挥各自优势，实现医疗数据的深度整合与高效利用，为医疗领域带来更精准、更智能的解决方案，具有重要的现实意义和广阔的应用前景。</p>
+        </div>
+		<div class="lg:col-span-3 bg-white rounded-lg shadow-md p-6">
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch mb-6"> 
+				<div class="bg-white rounded-xl p-6 shadow-lg border border-gray-200">
+					<h3 class="text-xl font-bold text-center text-[#007991] mb-6">方向1：医学知识图谱</h3>
+					<p class="text-slate-600 mb-6 text-center">医疗知识图谱能系统映射医疗概念间连接，通过实体与关系提取等构建结构化知识基础，为LLM提供明确医疗概念和关联，减少歧义。图数据库支持复杂医疗概念间的多跳推理和路径发现，图谱搜索算法提升检索精度和相关性，降低幻觉风险并增强了RAG系统可验证性、推理能力和约束性依从性的关键组成部分，是将LLM转变为“专业领域专家”的重要基础，对临床决策支持至关重要。</p>
+					<div class="flex justify-center items-center">
+						<div class="relative w-full max-w-lg h-80">
+							<!-- 疾病A -->
+							<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-4 rounded-full border-4 border-[#FF5E5B] bg-red-100 z-10">
+								<h4 class="font-bold">疾病A</h4>
+							</div>
+							<!-- 症状1 -->
+							<div class="absolute top-16 left-32 p-3 rounded-lg bg-blue-100 border border-blue-400">
+								<p>症状1</p>
+							</div>
+							<!-- 症状2 -->
+							<div class="absolute top-16 right-32 p-3 rounded-lg bg-blue-100 border border-blue-400">
+								<p>症状2</p>
+							</div>
+							<!-- 推荐治疗方案X -->
+							<div class="absolute bottom-16 left-1/4 p-3 rounded-lg bg-green-100 border border-green-400">
+								<p>推荐治疗方案X</p>
+							</div>
+							<!-- 关联药物Y -->
+							<div class="absolute bottom-16 right-1/4 p-3 rounded-lg bg-yellow-100 border border-yellow-400">
+								<p>关联药物Y</p>
+							</div>
+							<!-- 相关文献 -->
+							<div class="absolute top-1/2 right-16 -translate-y-1/2 p-3 rounded-lg bg-purple-100 border border-purple-400">
+								<p>相关文献 1</p>
+							</div>
+							<!-- 相关文献 -->
+							<div class="absolute top-1/2 left-16 -translate-y-1/2 p-3 rounded-lg bg-purple-100 border border-purple-400">
+								<p>相关文献 2</p>
+							</div>
+							<!-- 连接线 -->
+							<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+								<!-- 疾病A到症状1 -->
+								<div class="absolute left-0 top-0 border border-dashed border-blue-400 w-16 h-10 transform translate-y-1/2"></div>
+								<!-- 疾病A到症状2 -->
+								<div class="absolute right-0 top-0 border border-dashed border-blue-400 w-16 h-10 transform translate-y-1/2"></div>
+								<!-- 疾病A到治疗方案X -->
+								<div class="absolute left-0 bottom-0 border border-dashed border-green-400 w-16 h-10 transform -translate-y-1/2"></div>
+								<!-- 疾病A到关联药物Y -->
+								<div class="absolute right-0 bottom-0 border border-dashed border-yellow-400 w-16 h-10 transform -translate-y-1/2"></div>
+								<!-- 疾病A到相关文献 -->
+								<div class="absolute right-16 top-1/2 border border-dashed border-purple-400 h-10 w-16 transform translate-x-1/2"></div>
+								<!-- 疾病A到相关文献 -->
+								<div class="absolute left-16 bottom-1/2 border border-dashed border-purple-400 h-10 w-16 transform translate-y-1/2"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="bg-white rounded-xl p-6 shadow-lg border border-gray-200">
+					<h3 class="text-xl font-bold text-center text-[#007991] mb-6">方向2：医学多模态融合检索</h3>
+					<p class="text-slate-600 mb-6 text-center">医疗多模态融合检索技术成为医疗领域的重要发展方向，医疗数据以文本、影像、音频等多种形式爆炸式增长，形成了信息孤岛。医疗多模态融合检索技术通过整合这些异构数据，不仅为医生提供了前所未有的全面患者视图，更在提升诊断效率与准确性、支持临床决策和推动个性化医疗方面展现出巨大潜力。关键融合策略是在根据不同任务需求，模型在不同阶段整合多模态信息。混合融合利用注意力机制，动态权衡各模态的重要性，是目前最有效的方法。</p>
+						<div class="flex justify-center items-center">
+						  <div class="w-full overflow-x-auto p-4">
+							 <div class="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0 text-center text-sm">
+								<div class="flow-box p-3 rounded-lg md:w-1/4">
+									<p class="text-2xl font-bold text-center mb-2">输入融合</p>
+									<p class="text-sm text-slate-600 mt-2">在模型输入层前直接拼接各模态的原始特征。</p>
+								</div>
+								<div class="flow-arrow">→</div>
+								<div class="flow-box p-3 rounded-lg md:w-1/4">
+									<p class="text-2xl font-bold text-center mb-2">推理融合</p>
+									<p class="text-sm text-slate-600 mt-2">在模型深度网络的不同层级进行特征交互与融合，常利用<span class="font-bold text-[#F4A261]">注意力机制</span>。</p>
+								</div>
+								<div class="flow-arrow">→</div>
+								<div class="flow-box p-3 rounded-lg md:w-1/4">
+									<p class="text-2xl font-bold text-center mb-2">输出融合</p>
+									<p class="text-sm text-slate-600 mt-2">在模型输出层独立处理各模态，在最终预测层对结果进行加权或投票。</p>
+								</div>
+								
+							</div>
+						  </div>
+						</div>
+				</div>
+			  </div>
+		  </div>
+		</div>
+    </div>
+</main>
+
+<footer class="mt-8 bg-white">
+    <div class="container mx-auto px-6 py-4 text-center text-slate-500 text-sm">
+        <p>&copy; 2025 高精准医疗AI解决方案。本信息图表旨在概念性展示，数据为说明目的而设。</p>
+    </div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    
+    const wrapLabels = (labels, maxCharsPerLine) => {
+        return labels.map(label => {
+            if (typeof label === 'string' && label.length > maxCharsPerLine) {
+                const words = label.split(/\s+/);
+                let lines = [];
+                let currentLine = '';
+                words.forEach(word => {
+                    if ((currentLine + ' ' + word).trim().length > maxCharsPerLine && currentLine.length > 0) {
+                        lines.push(currentLine);
+                        currentLine = word;
+                    } else {
+                        currentLine = (currentLine + ' ' + word).trim();
+                    }
+                });
+                lines.push(currentLine);
+                return lines;
+            }
+            return label;
+        });
+    };
+
+    const universalTooltipCallback = {
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    title: function(tooltipItems) {
+                        const item = tooltipItems[0];
+                        if (!item) return '';
+                        let label = item.chart.data.labels[item.dataIndex];
+                        return Array.isArray(label) ? label.join(' ') : label;
+                    }
+                }
+            }
+        }
+    };
+
+    const docCompositionCtx = document.getElementById('docCompositionChart')?.getContext('2d');
+    if (docCompositionCtx) {
+        new Chart(docCompositionCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['非结构化文本', '表格数据', '列表/流程图'],
+                datasets: [{
+                    label: '文档组成',
+                    data: [60, 25, 15],
+                    backgroundColor: ['#00CECB', '#FFED66', '#FF5E5B'],
+                    borderColor: '#ffffff',
+                    borderWidth: 4,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    ...universalTooltipCallback.plugins,
+                    legend: {
+                        position: 'bottom',
+                    },
+                    title: {
+                        display: false,
+                    }
+                },
+                cutout: '60%'
+            }
+        });
+    }
+
+    const modelComparisonCtx = document.getElementById('modelComparisonChart')?.getContext('2d');
+    if (modelComparisonCtx) {
+        const originalLabels = ['临床术语理解', '复杂逻辑推理能力', '回答事实准确性', '遵循指令与约束能力', '引用来源可靠性'];
+        const wrappedLabels = wrapLabels(originalLabels, 16);
+
+        new Chart(modelComparisonCtx, {
+            type: 'radar',
+            data: {
+                labels: wrappedLabels,
+                datasets: [{
+                    label: '通用大模型',
+                    data: [6, 5, 4, 7, 3],
+                    fill: true,
+                    backgroundColor: 'rgba(255, 94, 91, 0.2)',
+                    borderColor: '#FF5E5B',
+                    pointBackgroundColor: '#FF5E5B',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: '#FF5E5B'
+                }, {
+                    label: '医疗微调模型',
+                    data: [9, 8, 9, 9, 8],
+                    fill: true,
+                    backgroundColor: 'rgba(0, 206, 203, 0.2)',
+                    borderColor: '#00CECB',
+                    pointBackgroundColor: '#00CECB',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: '#00CECB'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                ...universalTooltipCallback,
+                scales: {
+                    r: {
+                        angleLines: {
+                            color: '#e2e8f0'
+                        },
+                        grid: {
+                            color: '#e2e8f0'
+                        },
+                        pointLabels: {
+                            font: {
+                                size: 12
+                            },
+                            color: '#475569'
+                        },
+                        ticks: {
+                            backdropColor: 'rgba(255, 255, 255, 0.75)',
+                            color: '#64748b',
+                            stepSize: 2
+                        },
+                        min: 0,
+                        max: 10
+                    }
+                },
+                plugins: {
+                   ...universalTooltipCallback.plugins,
+                    legend: {
+                        position: 'bottom',
+                    },
+                }
+            }
+        });
+    }
+
+});
+</script>
+</body>
+</html>

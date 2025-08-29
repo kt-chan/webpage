@@ -152,28 +152,22 @@
                 </div>
             </section>
             <section id="memories-advantages" class="card p-8 md:p-12">
-                <h2 class="section-title text-3xl font-bold text-gray-900 mb-6">memories.ai 的市场竞对</h2>
+                <h2 class="section-title text-3xl font-bold text-gray-900 mb-6">多模态大模型</h2>
                 <div class="grid md:grid-cols-2 gap-8">
                     <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 flex flex-col items-start">
-                        <h3 class="text-2xl font-semibold text-gradient mb-2">商业竞争产品</h2>
-                            <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-12">
-                                <div class="text-xl font-semibold mb-1">GPT-4o</div>
-                                <p>强大的<strong>多模态模型</strong>，擅长图像理解和实体消歧，能精准识别图像中的物体、人物和场景，并处理同一名称指代不同实体的情况。</p>
-                            </div>
-                            <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-12">
-                                <div class="text-xl font-semibold mb-1">Gemini 2.5 Pro</div>
-                                <p>专注于处理<strong>长视频内容</strong>，具备强大的分析、总结和转录能力，能高效处理长时间的视频流，提取关键信息并生成精炼的摘要与文字记录。</p>
-                            </div>
+                        <h3 class="text-2xl font-semibold text-gradient mb-2">商业产品</h3>
+                        <div class="bg-gray-50 col-span-3 rounded-xl shadow-2xl p-8 mt-12 flex flex-col items-start">
+                            <div class="text-xl font-semibold mb-1">GPT-4o</div>
+                            <p>强大的<strong>多模态模型</strong>，擅长图像理解和实体消歧，能精准识别图像中的物体、人物和场景，并处理同一名称指代不同实体的情况。</p>
+                        </div>
+                        <div class="bg-gray-50 col-span-3 rounded-xl shadow-2xl p-8 mt-12 flex flex-col items-start">
+                            <div class="text-xl font-semibold mb-1">Gemini 2.5 Pro</div>
+                            <p>专注于处理<strong>长视频内容</strong>，具备强大的分析、总结和转录能力，能高效处理长时间的视频流，提取关键信息并生成精炼的摘要与文字记录。</p>
+                        </div>
                     </div>
 
                     <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 flex flex-col items-start">
-                        <h3 class="text-2xl font-semibold text-gradient mb-2">开源竞争产品</h2>
-                            <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-12">
-
-                                <div class="text-xl font-semibold mb-1">InternVL</div>
-                                <p>基础模型，专注于提升<strong>视觉理解和跨模态检索能力</strong>，功能与 LVMM 的“感知与编码”及“推理与检索”阶段相似。</p>
-
-                            </div>
+                        <h3 class="text-2xl font-semibold text-gradient mb-2">开源或开放方案</h2>
                             <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-12">
 
                                 <div class="text-xl font-semibold mb-1">Qwen-VL (阿里云)</div>
@@ -181,6 +175,12 @@
                                 </p>
 
                             </div>
+                            <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-12">
+
+                                <div class="text-xl font-semibold mb-1">GLM-4.5V (清华大学)</div>
+                                <p>通用视觉语言模型，擅长对图像进行<strong>精细理解和推理</strong>，在处理复杂场景和识别微小细节方面表现出色。</p>
+                            </div>
+
                             <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-12">
 
                                 <div class="text-xl font-semibold mb-1">Llama 4 (Meta)</div>
@@ -191,23 +191,24 @@
                             <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-12">
 
                                 <div class="text-xl font-semibold mb-1">Kimi-VL (Moonshot AI)</div>
-                                <p>采用<strong>混合专家（MoE）解码器</strong>，支持长视频、PDF 和屏幕截图的理解，并具备智能体能力。</p>
+                                <p>采用<strong>混合专家（MoE）解码器</strong>，支持长视频、PDF 和屏幕截图的理解，并具备多模态处理和智能体能力。</p>
 
                             </div>
+
                             <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-12">
 
-                                <div class="text-xl font-semibold mb-1">CogVLM (清华大学)</div>
-                                <p>通用视觉语言模型，擅长对图像进行<strong>精细理解和推理</strong>，在处理复杂场景和识别微小细节方面表现出色。</p>
-                            </div>
+                                <div class="text-xl font-semibold mb-1">InternVL</div>
+                                <p>基础模型，专注于提升<strong>视觉理解和跨模态检索能力</strong>，功能与 LVMM 的“感知与编码”及“检索与推理”阶段相似。</p>
 
+                            </div>
                     </div>
 
             </section>
 
             <section id="key-process" class="card p-8 md:p-12">
-                <h2 class="section-title text-3xl font-bold text-gray-900 mb-6">LVMM 的技术分析</h2>
-                <h2 class="text-3xl font-bold text-gradient mb-2 text-center">LVMM 关键过程</h2>
-                <p class="text-gray-400 mb-8 text-center max-w-3xl mx-auto">
+                <h2 class="section-title text-3xl font-bold text-gray-900 mb-6">LVMM 关键技术</h2>
+                <h2 class="text-3xl font-bold text-gradient mb-2 text-center">基于多模态模型，构建 LVMM 的关键过程</h2>
+                <p class="text-gray-400 mb-8 text-center  mx-auto">
                     视觉模型先感知编码视频流，形成语义记忆表示；再结构化管理，构建多模态知识图谱；接着推理检索，理解查询并高效分析；最后生成准确回应。</p>
                 <div class="flex flex-col lg:flex-row justify-center items-center lg:space-x-4 space-y-4 lg:space-y-0">
 
@@ -217,12 +218,12 @@
                     <div class="flow-arrow hidden lg:block">&rarr;</div>
                     <div class="flow-arrow block lg:hidden rotate-90">&rarr;</div>
                     <div class="diagram-node lg:w-1/5">
-                        <p>2. 结构化记忆管</p>
+                        <p>2. 检索与推理</p>
                     </div>
                     <div class="flow-arrow hidden lg:block">&rarr;</div>
                     <div class="flow-arrow block lg:hidden rotate-90">&rarr;</div>
                     <div class="diagram-node lg:w-1/5">
-                        <p>3. 推理与检索</p>
+                        <p>3. 结构化记忆管理</p>
                     </div>
                     <div class="flow-arrow hidden lg:block">&rarr;</div>
                     <div class="flow-arrow block lg:hidden rotate-90">&rarr;</div>
@@ -230,13 +231,86 @@
                         <p>4. 生成处理</p>
                     </div>
                 </div>
-                </br></br>
-                <h2 class="text-2xl font-bold text-gray-800 mb-2 text-center">关键技术相关开源项目</h2>
-                <p class="text-gray-400 mb-8 text-center max-w-3xl mx-auto">关键技术开源项目助力 LVMM
-                    实现感知编码、记忆管理、推理检索与生成处理。CLIP、ViT 等助力感知编码，TOBUGraph、MemVid 助力记忆管理，M3 Agent、GraphRAG 支持推理检索，LLaVA、MemVR
-                    保障生成处理，提升输出准确性。</p>
+                <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-2 mb-2">
+                    <img src="./resources/lvmm\LVMM-Logical-Architecture-Diagram.png" />
+                </div>
+
+
+            </section>
+            <!-- <section id="hierarchical-model" class="card p-8 md:p-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-2 text-center">关键 LVMM 流程</h2>
+                <p class="text-gray-400 mb-8 text-center  mx-auto">
+                    从原始数据到推理输出，LVMM作为一个无缝、集成的智能系统运作</br>
+                    持续高效地把多模世界的感知转化为结构化的、可查询的世界认知图谱。</p>
+                <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-8">
+                    <div
+                        class="flex flex-col lg:flex-row justify-center items-center lg:space-x-4 space-y-4 lg:space-y-0">
+                        <div class="diagram-node lg:w-1/8 bg-gray-400">
+                            <p>原始多模态数据</p>
+                        </div>
+                        <div class="flow-arrow hidden lg:block">&rarr;</div>
+                        <div class="flow-arrow block lg:hidden rotate-90">&rarr;</div>
+                        <div class="diagram-node lg:w-1/4">
+                            <p>多模融合聚类模型</p>
+                        </div>
+                        <div class="flow-arrow hidden lg:block">&rarr;</div>
+                        <div class="flow-arrow block lg:hidden rotate-90">&rarr;</div>
+                        <div class="diagram-node lg:w-1/4">
+                            <p>多模态知识图谱索引</p>
+                        </div>
+                        <div class="flow-arrow hidden lg:block">&rarr;</div>
+                        <div class="flow-arrow block lg:hidden rotate-90">&rarr;</div>
+                        <div class="diagram-node lg:w-1/4 ">
+                            <p>高效结构化记忆管理</p>
+                        </div>
+                        <div class="flow-arrow hidden lg:block">&rarr;</div>
+                        <div class="flow-arrow block lg:hidden rotate-90">&rarr;</div>
+                        <div class="diagram-node lg:w-1/8 bg-gray-400">
+                            <p>高精准内容生成</p>
+                        </div>
+                    </div>
+                </div>
+            </section> -->
+            <section id="hierarchical-model" class="card p-8 md:p-12">
+                <h2 class="section-title text-3xl font-bold text-gray-900 mb-6">关键技术（1）： 感知与编码 - 多模融合聚类模型</h2>
+                <h2 class="text-3xl font-bold text-gradient mb-2 text-center">基于高效多模态语义模型，构建多模融合聚类</h2>
+                <p class="text-gray-400 mb-8 text-center  mx-auto">
+                    传统RAG方案通常用单一嵌入向量表示文本或图像，处理多模态数据时会丢失模态间的信息。</br>
+                    ColBERT 是斯坦福开发的高效语义检索模型，通过“快速查找”和“后验交互”降低计算成本。</br>
+                    ColPali 是其多模态拓展，离线将文档图像块处理成轻量嵌入，查询时编码利用后交互机制匹配，使能高精度多模态检索。</p>
+                <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mb-8 mt-8">
+                    <p class="text-gray-800 mb-2 mt-2 text-center  mx-auto text-2xl font-semibold">
+                        ColBERT: 基于Stanford FutureData 的高效语义聚类模型（Embedding Models)
+                    </p>
+                    <p class="text-gray-400 mb-8 text-center  mx-auto">
+                        ColBERT 是由斯坦福FutureData团队开发的一个开源项目，专注于提供高效的语义搜索解决方案。</br>
+                        它利用了Transformer模型的强大表示能力，在不执行端到端的检索过程的情况下，实现了查询和文档的联合编码。</br>
+                        这种机制显著提高了大规模文本检索任务的效率与效果，结合“快速查找”与“后验交互”，以较少计算成本和延迟，达到优异聚类和关联能力。
+                    </p>
+                    <img src="./resources/lvmm\ColBERT-LateInteraction-Embedding.png" />
+
+                </div>
+
+                <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mb-8 mt-8">
+                    <p class="text-gray-800 mb-2 mt-2 text-center  mx-auto text-2xl font-semibold">
+                        ColPali: 高精准多模融合多模态RAG方案
+                    </p>
+                    <p class="text-gray-400 mb-8 text-center  mx-auto">
+                        ColPali 架构分为离线索引和在线查询两阶段</br>
+                        [1] 离线索引时，文档被处理成图像块，经编码在投影层处理后，由 VLM 模型生成压缩为轻量嵌入块。</br>
+                        [2] 在线查询时，通过类似ColBERT的后交互机制与预索引文档嵌入比对，返回最相关图像结果。</br>
+                    </p>
+
+                    <img src="./resources/lvmm\ColPali-Multi-Model-Fusion-Search.png" />
+
+                </div>
+
+
+                <p class="mt-6 text-center text-gray-700">
+                    ColPali能更高效地检索和利用视觉信息，提升多模态任务的性能，尤其是在处理视觉丰富的文档时具有明显优势。
+                </p>
                 <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-12">
-                    <h3 class="text-2xl font-semibold text-gray-900 mb-2">感知与编码</h3>
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-2">关键开源项目：感知与编码</h3>
                     <p class="text-gray-700 leading-relaxed">
                         这是 LVMM 的第一步。模型对原始视频流进行预处理，去除噪声，并将其压缩成高效的、富含语义信息的**记忆表示**。这就像人类大脑将感官输入转化为神经信号，为后续处理打下基础。
                     </p>
@@ -255,41 +329,71 @@
                             <div class="project-detail">一个用于处理图像和文本的大型视觉语言模型。</div>
                         </div>
                         <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-12">
-                            <div class="text-xl font-semibold mb-1">VideoMAP (CMU)</div>
-                            <div class="project-detail">专注于视频预训练，提取时空特征。</div>
-                        </div>
-                        <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-12">
                             <div class="text-xl font-semibold mb-1">SlowFast (Meta)</div>
                             <div class="project-detail">使用双分支网络，分别捕捉视频中的慢速（空间）和快速（时间）动作。</div>
                         </div>
+                        <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-12">
+                            <div class="text-xl font-semibold mb-1">ColPali (EIFFEL)</div>
+                            <div class="project-detail">基于分为离线索引和在线查询两阶段，构建高精准多模融合多模态RAG方案</div>
+                        </div>
+
                     </div>
                 </div>
-                <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-12">
-                    <h3 class="text-2xl font-semibold text-gray-900 mb-2">结构化记忆管理</h3>
-                    <p class="text-gray-700 leading-relaxed">
-                        在这一阶段，模型将编码后的视觉数据组织成一个可搜索的、上下文感知的记忆结构。它将关键元素（人、物、事件）与时间戳、位置等元数据连接起来，形成一个庞大的**多模态知识图谱**。
+            </section>
+
+
+            <section id="knowledge-graph" class="card p-8 md:p-12">
+                <h2 class="section-title text-3xl font-bold text-gray-900 mb-6">关键技术（2）：检索与推理 - 多模融合图谱索引</h2>
+
+                <h2 class="text-3xl font-bold text-gradient mb-2 text-center">基于多模态知识图谱的记忆</h2>
+
+                <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-8">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-2 text-center">关键知识图谱构建流程</h2>
+                    <p class="text-gray-400 mb-8 text-center  mx-auto">
+                        从原始数据到推理输出，LVMM作为一个无缝、集成的智能系统运作</br>
+                        持续高效地把多模世界的感知转化为结构化的、可查询的世界认知图谱。</p>
+                    <div
+                        class="flex flex-col lg:flex-row justify-center items-center lg:space-x-4 space-y-4 lg:space-y-0">
+                        <div class="diagram-node lg:w-1/5 bg-gray-400">
+                            <p>原始多模态数据</p>
+                        </div>
+                        <div class="flow-arrow hidden lg:block">&rarr;</div>
+                        <div class="flow-arrow block lg:hidden rotate-90">&rarr;</div>
+                        <div class="diagram-node lg:w-1/5">
+                            <p>实体识别和提取</p>
+                        </div>
+                        <div class="flow-arrow hidden lg:block">&rarr;</div>
+                        <div class="flow-arrow block lg:hidden rotate-90">&rarr;</div>
+                        <div class="diagram-node lg:w-1/5  bg-blue-800">
+                            <p>实体逻辑关系生成</p>
+                        </div>
+                        <div class="flow-arrow hidden lg:block">&rarr;</div>
+                        <div class="flow-arrow block lg:hidden rotate-90">&rarr;</div>
+                        <div class="diagram-node lg:w-1/5 ">
+                            <p>模型图谱融合检索</p>
+                        </div>
+                        <div class="flow-arrow hidden lg:block">&larr;</div>
+                        <div class="flow-arrow block lg:hidden rotate-90">&larr;</div>
+                        <div class="diagram-node lg:w-1/5 bg-gray-400">
+                            <p>高精准回答生成</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-8">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-2 text-center">多模态知识图谱构建方案</h2>
+                    <p class="text-gray-400 mb-8 text-center  mx-auto">
+                        Zep的「记忆」由一个具有时间感知能力的动态知识图谱所驱动，更接近人类心智中的记忆模式</br>
+                        整个知识图谱共包含3层子图，从底层到顶层分别为</br>
+                        情节（episode）子图，语义（semantic）子图以及社区（community）子图。</br>
                     </p>
-                    <div class="grid md:grid-cols-3 gap-8">
-
-                        <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-12">
-                            <div class="text-xl font-semibold mb-1">TOBUGraph (UMich)</div>
-                            <div class="project-detail">用于从多媒体输入中构建动态知识图谱。</div>
-                        </div>
-                        <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-12">
-                            <div class="text-xl font-semibold mb-1">MemVid (中国科学院)</div>
-                            <div class="project-detail">将视频数据编码为记忆结构，用于长期记忆和检索。</div>
-                        </div>
-                        <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-12">
-                            <div class="text-xl font-semibold mb-1">MemGraph & Mem0</div>
-                            <div class="project-detail">专注于内存图数据库，为记忆管理提供结构化框架。</div>
-                        </div>
-
-                    </div>
+                    <img class="text-gray-400 mt-8 mb-8 " src="./resources/lvmm\zep-grahitti-architecture.png" />
+                    <p class="text-gray-400 mb-8 text-center  mx-auto">
+                        3层知识图谱让使用Zep的LLM智能体发展出更加复杂和细微的知识存储结构。</br>
+                    </p>
                 </div>
-
-
                 <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-12">
-                    <h3 class="text-2xl font-semibold text-gray-900 mb-2">推理与检索</h3>
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-2">关键开源项目：检索与推理 </h3>
                     <p class="text-gray-700 leading-relaxed">
                         当用户提出查询时，LVMM 不仅仅进行关键词匹配，它会利用其结构化记忆进行**推理**。它能理解自然语言查询的意图，在知识图谱中高效地检索相关记忆片段，并进行关联分析。
                     </p>
@@ -298,7 +402,7 @@
 
                         <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-12">
                             <div class="text-xl font-semibold mb-1">M3 Agent (字节跳动)</div>
-                            <div class="project-detail">一个多模态多轮推理智能体。</div>
+                            <div class="project-detail">首创 “记忆” 与 “控制” 并行系统，模拟人类认知。记忆过程持续感知实时多模态输入以构建和更新长期记忆图谱；</div>
                         </div>
                         <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-12">
                             <div class="text-xl font-semibold mb-1">GraphRAG (Microsoft)</div>
@@ -306,65 +410,90 @@
                         </div>
                         <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-12">
                             <div class="text-xl font-semibold mb-1">Graphitti (Zep)</div>
-                            <div class="project-detail">一个用于图数据库的开源工具，支持高效的数据管理。</div>
+                            <div class="project-detail">一个用于图数据库的开源工具，支持高效的、实时的知识及数据管理。</div>
                         </div>
                         <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-12">
-                            <div class="text-xl font-semibold mb-1">AutoMR (X-Intelligence Labs)</div>
-                            <div class="project-detail">专注于自动化多模态推理。</div>
+                            <div class="text-xl font-semibold mb-1">RAG-Anything (HKU)</div>
+                            <div class="project-detail">多模态知识图谱，整合理解文件中的文字、图片、表格、公式等信息，以及不同内容之间的关联。</div>
                         </div>
                     </div>
-
                 </div>
-                <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-12">
-                    <h3 class="text-2xl font-semibold text-gray-900 mb-2">生成处理</h3>
-                    <p class="text-gray-700 leading-relaxed">
-                        这是 LVMM 的输出环节。模型将检索到的记忆与查询结合，生成详细、连贯且基于事实的回应。这一过程还包括对回忆内容的过滤和提炼，确保输出的准确性和相关性。
-                    </p>
-                    <div class="grid md:grid-cols-2 gap-8">
-                        <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-12">
-                            <div class="text-xl font-semibold mb-1">LLaVA (微软)</div>
-                            <div class="project-detail">连接视觉编码器（如 CLIP-ViT）与大型语言模型（如 Vicuna），用于通用视觉和语言理解。</div>
-                        </div>
-                        <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-12">
-                            <div class="text-xl font-semibold mb-1">MemVR (香港科技大学)</div>
-                            <div class="project-detail">一个专注于视觉记忆的强化学习项目。</div>
-                        </div>
-                    </div>
-
-                </div>
-
             </section>
 
             <section id="hierarchical-model" class="card p-8 md:p-12">
-                <h2 class="section-title text-3xl font-bold text-gray-900 mb-6">关键技术（1）：结构化记忆管理</h2>
-                <h2 class="text-3xl font-bold text-gradient mb-2 text-center">四个分层记忆核心</h2>
-                <p class="text-gray-400 mb-8 text-center max-w-3xl mx-auto">
-                    受计算机架构启发，LVMM将记忆分为多个层级，以平衡高速访问和海量长期存储，从而实现实时推理和深度分析。</p>
-                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
-                    <div class="p-4 bg-gray-50 rounded-xl border border-gray-200">
-                        <div class="text-3xl text-gray-600 mb-2">🧠</div>
-                        <h3 class="text-xl font-semibold mb-1">短期记忆</h3>
-                        <p class="text-sm text-gray-700">处理实时、即时输入的“工作区”</p>
+                <h2 class="section-title text-3xl font-bold text-gray-900 mb-6">关键技术（3）：结构化记忆管理 - 智能分层高速缓存</h2>
+                <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-8">
+                    <h2 class="text-3xl font-bold text-gradient mb-2 text-center">四类记忆高效关联</h2>
+                    <p class="text-gray-400 mb-8 text-center  mx-auto">
+                        四类记忆分别是短期记忆、情景记忆、语义记忆和程序记忆，</br>
+                        它将原始感知数据构建成一个由情景记忆和语义记忆相互连接的网络。
+                    </p>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 text-center mb-2 mt-2">
+                        <div class="p-4 bg-gray-50 rounded-xl border border-gray-200">
+                            <div class="text-3xl text-gray-600 mb-2">🧠</div>
+                            <h3 class="text-xl font-semibold mb-1">短期记忆</h3>
+                            <p class="text-sm text-gray-700">处理实时、即时输入的“工作区”</p>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded-xl border border-gray-200">
+                            <div class="text-3xl text-gray-600 mb-2">📚</div>
+                            <h3 class="text-xl font-semibold mb-1">情景记忆</h3>
+                            <p class="text-sm text-gray-700">存储带有时间和地点上下文的特定事件</p>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded-xl border border-gray-200">
+                            <div class="text-3xl text-gray-600 mb-2">📖</div>
+                            <h3 class="text-xl font-semibold mb-1">语义记忆</h3>
+                            <p class="text-sm text-gray-700">存储抽象、通用的事实和知识</p>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded-xl border border-gray-200">
+                            <div class="text-3xl text-gray-600 mb-2">💡</div>
+                            <h3 class="text-xl font-semibold mb-1">程序记忆</h3>
+                            <p class="text-sm text-gray-700">存储自动化技能、规则和行为</p>
+                        </div>
                     </div>
-                    <div class="p-4 bg-gray-50 rounded-xl border border-gray-200">
-                        <div class="text-3xl text-gray-600 mb-2">📚</div>
-                        <h3 class="text-xl font-semibold mb-1">情景记忆</h3>
-                        <p class="text-sm text-gray-700">存储带有时间和地点上下文的特定事件</p>
+                    <div class="text-gray-400 mt-8 text-center  mx-auto">
+                        <p class="text-2xl font-semibold text-gray-900 mb-2">四类记忆高效关联使能高效的和精准的多模态检索。</p>
+                        <p class="text-gray-400 text-center mb-8 mx-auto">
+                            LVMM的核心是一个以实体为中心的多模态知识图谱（MMKG），</br>
+                            它们相互交织，共同构建智能体的认知能力，使LVMM高效整合多模态知识，实现精准检索与动态调整。
+                        </p>
                     </div>
-                    <div class="p-4 bg-gray-50 rounded-xl border border-gray-200">
-                        <div class="text-3xl text-gray-600 mb-2">📖</div>
-                        <h3 class="text-xl font-semibold mb-1">语义记忆</h3>
-                        <p class="text-sm text-gray-700">存储抽象、通用的事实和知识</p>
+                    <div class="grid grid-cols-1 md:grid-cols-5 items-center gap-4">
+                        <div class="diagram-node md:col-start-2 md:col-span-3 bg-blue-600">
+                            <h3 class="font-bold text-lg">短期记忆</h3>
+                            <p class="text-sm text-gray-300">短期记忆是处理实时输入的“工作区”，用于对即时信息进行短暂存储和动态调整。</p>
+                        </div>
+                        <div
+                            class="md:col-span-5 text-center text-4xl font-bold text-gray-500 transform rotate-90 md:rotate-0">
+                            &darr;</div>
                     </div>
-                    <div class="p-4 bg-gray-50 rounded-xl border border-gray-200">
-                        <div class="text-3xl text-gray-600 mb-2">💡</div>
-                        <h3 class="text-xl font-semibold mb-1">程序记忆</h3>
-                        <p class="text-sm text-gray-700">存储自动化技能、规则和行为</p>
+                    <div class="grid grid-cols-1 md:grid-cols-5 items-center gap-4">
+                        <div class="diagram-node md:col-span-2 bg-blue-600">
+                            <h3 class="font-bold text-lg">情景记忆</h3>
+                            <p class="text-sm text-gray-300">情景记忆记录带有时间和地点上下文的特定事件，具有上下文相关性和事件驱动性</p>
+                        </div>
+                        <div class="text-center text-4xl font-bold text-gray-500">&harr;</div>
+                        <div class="diagram-node md:col-span-2 bg-blue-600">
+                            <h3 class="font-bold text-lg">语义记忆</h3>
+                            <p class="text-sm text-gray-300">语义记忆存储抽象且通用的事实和知识，特点是逻辑性和永久性。</p>
+                        </div>
+                        <div
+                            class="md:col-span-5 text-center text-4xl font-bold text-gray-500 transform rotate-90 md:rotate-0">
+                            &darr;</div>
+                        <div class="diagram-node md:col-start-2 md:col-span-3 bg-blue-600">
+                            <h3 class="font-bold text-lg">程序记忆</h3>
+                            <p class="text-sm text-gray-300">程序记忆存储技能和行为规则，具有自动性和结构化特征。</p>
+                        </div>
                     </div>
+                    </br>
                 </div>
 
                 <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-12">
-
+                    <h2 class="text-3xl font-bold text-gradient mb-2 text-center">四个分层记忆的高速缓存</h2>
+                    <p class="text-gray-400 mb-8 text-center  mx-auto">
+                        多模态智能识别需要平衡性能和成本，最重要的技术是记忆管理的中枢的分级缓存.
+                        </br>
+                        LVMM将记忆分为多个层级，以平衡高速访问和海量长期存储，从而实现实时推理和深度分析。
+                    </p>
                     <div class="flex flex-col items-center space-y-0">
                         <div class="diagram-node w-full md:w-1/2">
                             <h3 class="font-bold text-lg">L1：瞬时‘寄存器’</h3>
@@ -386,73 +515,38 @@
                             <p class="text-sm text-gray-300">原始视频和音频文件的完整存档，链接到图谱，用于按需、高保真分析。</p>
                         </div>
                     </div>
+
+                    <p class="text-gray-800 mt-8 mb-8 text-center  mx-auto">
+                        从L1到L4行形成高效智能记忆体系。
+                    </p>
                 </div>
                 <p class="mt-6 text-center text-gray-700">
                     这四种记忆类型并非孤立存在，而是持续相互作用，赋予AI理解、推理和适应能力。
                 </p>
-            </section>
 
+                <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-12">
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-2">关键开源项目：结构化记忆管理</h3>
+                    <p class="text-gray-700 leading-relaxed">
+                        在这一阶段，模型将编码后的视觉数据组织成一个可搜索的、上下文感知的记忆结构。它将关键元素（人、物、事件）与时间戳、位置等元数据连接起来，形成一个庞大的**多模态知识图谱**。
+                    </p>
+                    <div class="grid md:grid-cols-3 gap-8">
 
-            <section id="knowledge-graph" class="card p-8 md:p-12">
-                <h2 class="section-title text-3xl font-bold text-gray-900 mb-6">关键技术（2）：推理与检索核心</h2>
-
-                <h2 class="text-3xl font-bold text-gradient mb-2 text-center">基于多模态知识图谱的记忆</h2>
-
-                <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-8">
-                    <h2 class="text-3xl font-bold text-gray-400 mb-2 text-center">端到端LVMM管线</h2>
-                    <p class="text-gray-400 mb-8 text-center max-w-3xl mx-auto">
-                        从原始数据到推理输出，LVMM作为一个无缝、集成的系统运作，将持续的感知转化为结构化的、可查询的世界认知图谱。</p>
-                    <div
-                        class="flex flex-col lg:flex-row justify-center items-center lg:space-x-4 space-y-4 lg:space-y-0">
-                        <div class="diagram-node lg:w-1/5">
-                            <p>原始视频/音频流</p>
+                        <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-12">
+                            <div class="text-xl font-semibold mb-1">TOBUGraph (UMich)</div>
+                            <div class="project-detail">用于从多媒体输入中构建动态知识图谱。</div>
                         </div>
-                        <div class="flow-arrow hidden lg:block">&rarr;</div>
-                        <div class="flow-arrow block lg:hidden rotate-90">&rarr;</div>
-                        <div class="diagram-node lg:w-1/5">
-                            <p>感知层（编码器）</p>
+                        <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-12">
+                            <div class="text-xl font-semibold mb-1">MemVid (中国科学院)</div>
+                            <div class="project-detail">将视频数据编码为记忆结构，用于长期记忆和检索。</div>
                         </div>
-                        <div class="flow-arrow hidden lg:block">&rarr;</div>
-                        <div class="flow-arrow block lg:hidden rotate-90">&rarr;</div>
-                        <div class="diagram-node lg:w-1/5">
-                            <p>记忆创建（MMKG）</p>
-                        </div>
-                        <div class="flow-arrow hidden lg:block">&rarr;</div>
-                        <div class="flow-arrow block lg:hidden rotate-90">&rarr;</div>
-                        <div class="diagram-node lg:w-1/5">
-                            <p>推理引擎（GraphRAG）</p>
-                        </div>
-                        <div class="flow-arrow hidden lg:block">&larr;</div>
-                        <div class="flow-arrow block lg:hidden rotate-90">&larr;</div>
-                        <div class="diagram-node lg:w-1/5">
-                            <p>LLM 回答生成</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-400 mb-8 text-center max-w-3xl mx-auto"></br></p>
-                    <h2 class="text-3xl font-bold text-gray-400 mb-2 text-center">多模态知识图谱赋能高速精准的推理与检索</h2>
-                    <p class="text-gray-400 mb-8 text-center max-w-3xl mx-auto">
-                        LVMM的核心是一个以实体为中心的多模态知识图谱（MMKG），它将原始感知数据构建成一个由情景记忆和语义记忆相互连接的网络。</p>
-                    <div class="grid grid-cols-1 md:grid-cols-5 items-center gap-4">
-                        <div class="diagram-node md:col-span-2">
-                            <h3 class="font-bold text-lg">情景记忆</h3>
-                            <p class="text-sm text-gray-300">代表特定、有时间戳的事件。（例如：“约翰在晚上7点做了晚餐”）</p>
-                        </div>
-                        <div class="text-center text-4xl font-bold text-gray-500">&harr;</div>
-                        <div class="diagram-node md:col-span-2">
-                            <h3 class="font-bold text-lg">语义记忆</h3>
-                            <p class="text-sm text-gray-300">代表一般性的世界知识。（例如：“烹饪”、“晚餐”等概念）</p>
-                        </div>
-                        <div
-                            class="md:col-span-5 text-center text-4xl font-bold text-gray-500 transform rotate-90 md:rotate-0">
-                            &darr;</div>
-                        <div class="diagram-node md:col-start-2 md:col-span-3">
-                            <h3 class="font-bold text-lg">以实体为中心的核心</h3>
-                            <p class="text-sm text-gray-300">所有记忆都通过中心实体（人、物体、位置）相互关联，以实现连贯、长期的理解。</p>
+                        <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-12">
+                            <div class="text-xl font-semibold mb-1"> Mem0</div>
+                            <div class="project-detail">专注于内存图数据库，为记忆管理提供结构化框架。</div>
                         </div>
                     </div>
                 </div>
-
             </section>
+
             <section id="knowledge-graph" class="card p-8 md:p-12">
                 <h2 class="section-title text-3xl font-bold text-gray-900 mb-6">洞察输出</h2>
                 <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-8">
@@ -462,22 +556,43 @@
                     <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-8">
                         <h3 class="text-2xl font-semibold text-gray-900 mb-2">#1 KV-Cache升级支持分层记忆架构：平衡速度与容量的认知基石</h3>
                         <p>借鉴计算机体系结构，设计四级分层记忆模型，完美解决“实时响应”与“无限记忆”的矛盾。</p>
+                        <div class="text-xl text-center  font-semibold mt-6">开源对标项目</div>
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-6">
+                                <div class="text-xl font-semibold mb-1">Mem0</div>
+                                <div class="project-detail">专注于内存图数据库，为记忆管理提供结构化框架。</div>
+                            </div>
+                            <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-6">
+                                <div class="text-xl font-semibold mb-1">MemVid (中国科学院)</div>
+                                <div class="project-detail">将视频数据编码为记忆结构，用于长期记忆和检索。</div>
+                            </div>
+                        </div>
                     </div>
                     <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-8">
-                        <h3 class="text-2xl font-semibold text-gray-900 mb-2">#2 专用硬件卸载感知编码：突破昇腾视图处理短板，解锁LVMM效能瓶颈</h3>
-                        <p>将固定、高耗能的感知编码计算任务从主GPU卸载到专用集成电路（ASIC）或FPGA加速卡上的硬件IP核，实现算法与硬件协同设计。</p>
-                    </div>
-                    <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-8">
-                        <h3 class="text-2xl font-semibold text-gray-900 mb-2">#3 内生于AI知识库的多模态图谱能力：从数据存储，走向数据理解</h3>
+                        <h3 class="text-2xl font-semibold text-gray-900 mb-2">#2 内生于AI知识库的多模态图谱能力：从数据存储，走向数据理解</h3>
                         <p>LVMM的核心是“理解”，而非“存储”。其知识库必须进化为一个能原生理解多模态数据及其复杂关系的认知网络。</p>
+                        <div class="text-xl text-center  font-semibold mt-6">开源对标项目</div>
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-6">
+                                <div class="text-xl font-semibold mb-1">ColPali (EIFFEL)</div>
+                                <div class="project-detail">基于分为离线索引和在线查询两阶段，构建高精准多模融合多模态RAG方案</div>
+                            </div>
+                            <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-6">
+                                <div class="text-xl font-semibold mb-1">Graphitti (Zep)</div>
+                                <div class="project-detail">一个用于图数据库的开源工具，支持高效的、实时的知识及数据管理。</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-8">
+                        <h3 class="text-2xl font-semibold text-gray-900 mb-2">#3 专用硬件卸载感知编码：突破昇腾视图处理短板，解锁LVMM效能瓶颈</h3>
+                        <p>将固定、高耗能的感知编码计算任务从主GPU卸载到专用集成电路（ASIC）或FPGA加速卡上的硬件IP核，实现算法与硬件协同设计。</p>
                     </div>
                 </div>
             </section>
         </main>
 
         <footer class="text-center mt-12 text-gray-500 text-sm">
-            
-        </footer></br></br></br>
             <p>此信息图旨在解释LVMM的核心概念。部分数据和案例为模拟场景。</p>
         </footer>
 

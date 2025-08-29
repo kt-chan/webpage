@@ -375,7 +375,7 @@
                 </div>
 
                 <div class="bg-gray-50 text-center rounded-xl shadow-2xl p-8 mt-8">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-2 text-center">多模态知识图谱构建方案</h2>
+                    <h2 class="text-3xl font-bold text-gray-800 mb-2 text-center">Graphitti 多模态知识图谱构建方案</h2>
                     <p class="text-gray-400 mb-8 text-center  mx-auto">
                         Zep的「记忆」由一个具有时间感知能力的动态知识图谱所驱动，更接近人类心智中的记忆模式</br>
                         整个知识图谱共包含3层子图，从底层到顶层分别为</br>
@@ -417,106 +417,116 @@
             <section id="hierarchical-model" class="card p-8 md:p-12">
                 <h2 class="section-title text-3xl font-bold text-gray-900 mb-6">关键技术（3）：结构化记忆管理 - 智能分层高速缓存</h2>
                 <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-8">
-                    <h2 class="text-3xl font-bold text-gradient mb-2 text-center">四类记忆高效关联</h2>
-                    <p class="text-gray-400 mb-8 text-center  mx-auto">
-                        四类记忆分别是短期记忆、情景记忆、语义记忆和程序记忆，</br>
-                        它将原始感知数据构建成一个由情景记忆和语义记忆相互连接的网络。
-                    </p>
-                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 text-center mb-2 mt-2">
-                        <div class="p-4 bg-gray-50 rounded-xl border border-gray-200">
-                            <div class="text-3xl text-gray-600 mb-2">🧠</div>
-                            <h3 class="text-xl font-semibold mb-1">短期记忆</h3>
-                            <p class="text-sm text-gray-700">处理实时、即时输入的“工作区”</p>
+                    <h2 class="text-3xl font-bold text-gradient mb-2 text-center">Mem0 是一种新型的智能体记忆管理系统</h2>
+                    <p class="text-gray-400 mb-8 text-center  mx-auto">Mem0 是一种新型的智能体记忆管理系统，它通过专门的模块从对话中提取、评估和管理关键信息。</br>
+                        系统处理用户与助手之间的消息对，分为提取和更新两个阶段，以保持知识库的一致性和连贯性。</br>
+                        数据库作为中央存储库，提供上下文信息并存储更新后的记忆。</p>
+                    <img src=".\resources\lvmm\Mem0-Logics.png"/>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-8">
+                        <h2 class="text-3xl font-bold text-gradient mb-2 text-center">四类记忆高效关联</h2>
+                        <p class="text-gray-400 mb-8 text-center  mx-auto">
+                            四类记忆分别是短期记忆、情景记忆、语义记忆和程序记忆，</br>
+                            它将原始感知数据构建成一个由情景记忆和语义记忆相互连接的网络。
+                        </p>
+
+                        <!-- <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 text-center mb-2 mt-2">
+                            <div class="p-4 bg-gray-50 rounded-xl border border-gray-200">
+                                <div class="text-3xl text-gray-600 mb-2">🧠</div>
+                                <h3 class="text-xl font-semibold mb-1">短期记忆</h3>
+                                <p class="text-sm text-gray-700">处理实时、即时输入的“工作区”</p>
+                            </div>
+                            <div class="p-4 bg-gray-50 rounded-xl border border-gray-200">
+                                <div class="text-3xl text-gray-600 mb-2">📚</div>
+                                <h3 class="text-xl font-semibold mb-1">情景记忆</h3>
+                                <p class="text-sm text-gray-700">存储带有时间和地点上下文的特定事件</p>
+                            </div>
+                            <div class="p-4 bg-gray-50 rounded-xl border border-gray-200">
+                                <div class="text-3xl text-gray-600 mb-2">📖</div>
+                                <h3 class="text-xl font-semibold mb-1">语义记忆</h3>
+                                <p class="text-sm text-gray-700">存储抽象、通用的事实和知识</p>
+                            </div>
+                            <div class="p-4 bg-gray-50 rounded-xl border border-gray-200">
+                                <div class="text-3xl text-gray-600 mb-2">💡</div>
+                                <h3 class="text-xl font-semibold mb-1">程序记忆</h3>
+                                <p class="text-sm text-gray-700">存储自动化技能、规则和行为</p>
+                            </div>
+                        </div> -->
+                        <!-- <div class="text-gray-400 mt-8 text-center  mx-auto">
+                            <p class="text-2xl font-semibold text-gray-900 mb-2">四类记忆高效关联使能高效的和精准的多模态检索。</p>
+                            <p class="text-gray-400 text-center mb-8 mx-auto">
+                                LVMM的核心是一个以实体为中心的多模态知识图谱（MMKG），</br>
+                                它们相互交织，共同构建智能体的认知能力，使LVMM高效整合多模态知识，实现精准检索与动态调整。
+                            </p>
+                        </div> -->
+                        <div class="grid grid-cols-1 md:grid-cols-5 items-center gap-4">
+                            <div class="diagram-node md:col-start-2 md:col-span-3 bg-blue-600">
+                                <h3 class="font-bold text-lg">短期记忆</h3>
+                                <p class="text-sm text-gray-300">短期记忆是处理实时输入的“工作区”，用于对即时信息进行短暂存储和动态调整。</p>
+                            </div>
+                            <div
+                                class="md:col-span-5 text-center text-4xl font-bold text-gray-500 transform rotate-90 md:rotate-0">
+                                &darr;</div>
                         </div>
-                        <div class="p-4 bg-gray-50 rounded-xl border border-gray-200">
-                            <div class="text-3xl text-gray-600 mb-2">📚</div>
-                            <h3 class="text-xl font-semibold mb-1">情景记忆</h3>
-                            <p class="text-sm text-gray-700">存储带有时间和地点上下文的特定事件</p>
+                        <div class="grid grid-cols-1 md:grid-cols-5 items-center gap-4">
+                            <div class="diagram-node md:col-span-2 bg-blue-600">
+                                <h3 class="font-bold text-lg">情景记忆</h3>
+                                <p class="text-sm text-gray-300">情景记忆记录带有时间和地点上下文的特定事件，具有上下文相关性和事件驱动性</p>
+                            </div>
+                            <div class="text-center text-4xl font-bold text-gray-500">&harr;</div>
+                            <div class="diagram-node md:col-span-2 bg-blue-600">
+                                <h3 class="font-bold text-lg">语义记忆</h3>
+                                <p class="text-sm text-gray-300">语义记忆存储抽象且通用的事实和知识，特点是逻辑性和永久性。</p>
+                            </div>
+                            <div
+                                class="md:col-span-5 text-center text-4xl font-bold text-gray-500 transform rotate-90 md:rotate-0">
+                                &darr;</div>
+                            <div class="diagram-node md:col-start-2 md:col-span-3 bg-blue-600">
+                                <h3 class="font-bold text-lg">程序记忆</h3>
+                                <p class="text-sm text-gray-300">程序记忆存储技能和行为规则，具有自动性和结构化特征。</p>
+                            </div>
                         </div>
-                        <div class="p-4 bg-gray-50 rounded-xl border border-gray-200">
-                            <div class="text-3xl text-gray-600 mb-2">📖</div>
-                            <h3 class="text-xl font-semibold mb-1">语义记忆</h3>
-                            <p class="text-sm text-gray-700">存储抽象、通用的事实和知识</p>
-                        </div>
-                        <div class="p-4 bg-gray-50 rounded-xl border border-gray-200">
-                            <div class="text-3xl text-gray-600 mb-2">💡</div>
-                            <h3 class="text-xl font-semibold mb-1">程序记忆</h3>
-                            <p class="text-sm text-gray-700">存储自动化技能、规则和行为</p>
-                        </div>
-                    </div>
-                    <div class="text-gray-400 mt-8 text-center  mx-auto">
-                        <p class="text-2xl font-semibold text-gray-900 mb-2">四类记忆高效关联使能高效的和精准的多模态检索。</p>
-                        <p class="text-gray-400 text-center mb-8 mx-auto">
-                            LVMM的核心是一个以实体为中心的多模态知识图谱（MMKG），</br>
-                            它们相互交织，共同构建智能体的认知能力，使LVMM高效整合多模态知识，实现精准检索与动态调整。
+                        <p class="mt-6 text-center text-gray-700">
+                            这四种记忆类型并非孤立存在，而是持续相互作用，赋予AI理解、推理和适应能力。
                         </p>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-5 items-center gap-4">
-                        <div class="diagram-node md:col-start-2 md:col-span-3 bg-blue-600">
-                            <h3 class="font-bold text-lg">短期记忆</h3>
-                            <p class="text-sm text-gray-300">短期记忆是处理实时输入的“工作区”，用于对即时信息进行短暂存储和动态调整。</p>
+
+                    <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-12">
+                        <h2 class="text-3xl font-bold text-gradient mb-2 text-center">四个分层记忆的高速缓存</h2>
+                        <p class="text-gray-400 mb-8 text-center  mx-auto">
+                            多模态智能识别需要平衡性能和成本，最重要的技术是记忆管理的中枢的分级缓存.
+                            </br>
+                            LVMM将记忆分为多个层级，以平衡高速访问和海量长期存储，从而实现实时推理和深度分析。
+                        </p>
+                        <div class="flex flex-col items-center space-y-0">
+                            <div class="diagram-node w-full md:w-1/2">
+                                <h3 class="font-bold text-lg">L1：瞬时‘寄存器’</h3>
+                                <p class="text-sm text-gray-300">来自感知编码器的原始视觉/文本令牌。实时处理。</p>
+                            </div>
+                            <div class="diagram-connector"></div>
+                            <div class="diagram-node w-full md:w-2/3">
+                                <h3 class="font-bold text-lg">L2：高速‘缓存’</h3>
+                                <p class="text-sm text-gray-300">用于低延迟、多轮推理的内存知识图谱，处理频繁访问的数据。</p>
+                            </div>
+                            <div class="diagram-connector"></div>
+                            <div class="diagram-node w-full md:w-5/6">
+                                <h3 class="font-bold text-lg">L3：持久‘主内存’</h3>
+                                <p class="text-sm text-gray-300">持久的、基于磁盘的知识图谱，确保所有捕获的记忆得到长期存储。</p>
+                            </div>
+                            <div class="diagram-connector"></div>
+                            <div class="diagram-node w-full">
+                                <h3 class="font-bold text-lg">L4：长期‘虚拟内存’</h3>
+                                <p class="text-sm text-gray-300">原始视频和音频文件的完整存档，链接到图谱，用于按需、高保真分析。</p>
+                            </div>
                         </div>
-                        <div
-                            class="md:col-span-5 text-center text-4xl font-bold text-gray-500 transform rotate-90 md:rotate-0">
-                            &darr;</div>
+
+                        <p class="text-gray-800 mt-8 mb-8 text-center  mx-auto">
+                            从L1到L4行形成高效智能记忆体系。
+                        </p>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-5 items-center gap-4">
-                        <div class="diagram-node md:col-span-2 bg-blue-600">
-                            <h3 class="font-bold text-lg">情景记忆</h3>
-                            <p class="text-sm text-gray-300">情景记忆记录带有时间和地点上下文的特定事件，具有上下文相关性和事件驱动性</p>
-                        </div>
-                        <div class="text-center text-4xl font-bold text-gray-500">&harr;</div>
-                        <div class="diagram-node md:col-span-2 bg-blue-600">
-                            <h3 class="font-bold text-lg">语义记忆</h3>
-                            <p class="text-sm text-gray-300">语义记忆存储抽象且通用的事实和知识，特点是逻辑性和永久性。</p>
-                        </div>
-                        <div
-                            class="md:col-span-5 text-center text-4xl font-bold text-gray-500 transform rotate-90 md:rotate-0">
-                            &darr;</div>
-                        <div class="diagram-node md:col-start-2 md:col-span-3 bg-blue-600">
-                            <h3 class="font-bold text-lg">程序记忆</h3>
-                            <p class="text-sm text-gray-300">程序记忆存储技能和行为规则，具有自动性和结构化特征。</p>
-                        </div>
-                    </div>
-                    </br>
                 </div>
 
-                <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-12">
-                    <h2 class="text-3xl font-bold text-gradient mb-2 text-center">四个分层记忆的高速缓存</h2>
-                    <p class="text-gray-400 mb-8 text-center  mx-auto">
-                        多模态智能识别需要平衡性能和成本，最重要的技术是记忆管理的中枢的分级缓存.
-                        </br>
-                        LVMM将记忆分为多个层级，以平衡高速访问和海量长期存储，从而实现实时推理和深度分析。
-                    </p>
-                    <div class="flex flex-col items-center space-y-0">
-                        <div class="diagram-node w-full md:w-1/2">
-                            <h3 class="font-bold text-lg">L1：瞬时‘寄存器’</h3>
-                            <p class="text-sm text-gray-300">来自感知编码器的原始视觉/文本令牌。实时处理。</p>
-                        </div>
-                        <div class="diagram-connector"></div>
-                        <div class="diagram-node w-full md:w-2/3">
-                            <h3 class="font-bold text-lg">L2：高速‘缓存’</h3>
-                            <p class="text-sm text-gray-300">用于低延迟、多轮推理的内存知识图谱，处理频繁访问的数据。</p>
-                        </div>
-                        <div class="diagram-connector"></div>
-                        <div class="diagram-node w-full md:w-5/6">
-                            <h3 class="font-bold text-lg">L3：持久‘主内存’</h3>
-                            <p class="text-sm text-gray-300">持久的、基于磁盘的知识图谱，确保所有捕获的记忆得到长期存储。</p>
-                        </div>
-                        <div class="diagram-connector"></div>
-                        <div class="diagram-node w-full">
-                            <h3 class="font-bold text-lg">L4：长期‘虚拟内存’</h3>
-                            <p class="text-sm text-gray-300">原始视频和音频文件的完整存档，链接到图谱，用于按需、高保真分析。</p>
-                        </div>
-                    </div>
-
-                    <p class="text-gray-800 mt-8 mb-8 text-center  mx-auto">
-                        从L1到L4行形成高效智能记忆体系。
-                    </p>
-                </div>
-                <p class="mt-6 text-center text-gray-700">
-                    这四种记忆类型并非孤立存在，而是持续相互作用，赋予AI理解、推理和适应能力。
-                </p>
 
                 <div class="bg-gray-50 rounded-xl shadow-2xl p-8 mt-12">
                     <h3 class="text-2xl font-semibold text-gray-900 mb-2">关键开源项目：结构化记忆管理</h3>

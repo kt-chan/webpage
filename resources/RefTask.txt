@@ -1,0 +1,55 @@
+Database Modernization, hybrid cloud, AI and ML
+
+Message: the one with proven experience on building mission critical AI applications, from concepts to production, with large pretrain models and modern database technologies (SQL + Vector) in heavily regulated industries like healthcare, finance, and energy.
+
+# case 1: RuiPath - Finetune VisionTransformer and neural network for Tumor Classification and Cancer Stage Measurements at 30x productivity.
+
+#Background
+ShangHai Ruijin hospital group is one fo the top 5 hospital in china, and number one in pathology. It has over 2 millions high resolution digitalized pathology whole slide images which were dark data not long time ago, it is a liabillity from hospital perspective that just sit in our archival storage system for compliance purpose only. To convert those liability into asset, we have to extarct business value from those vast amount of unstructured dark data, I have spent six months there with a team size of 6 to develop computer vision solution to support pathologists (doctors specialized on tumor tissue examination) to automate this task.
+
+#Solution 
+AI and ML:  we tune a VisionTransformer model and develop a set of machine learning algorithms for tumor cell classification and tumor stages measurements (e.g. depth of invasion). Specifically, there are three tasks, and my roles is the architect in model and data engineer supporting  task 1 , and leading task 2 and 3.
+
+Task 1: VisionTransformer (embedding model) tunning, this is to boost the model cognitive capabilities on learning pattern of human tissues through unsupervised learning (no human label required. we run Pytorch deepspeed on ray cluster for ViT2.0 (a vision transformer model) finetune with 2 millions pathology slides , such that the general visual transformer can easily capture the distribution and abnormality of human tissue cells. We use tensorboard in monitoring the computing resources (gpu and memory utilization, network io, and disk checkpoint) and model convergence (reconstruction loss on mean absolute error).
+
+Task 2: downstream tumor classification model, this is to develop and tune simple neural networks for varies down stream tumor classification and measurement tasks with multi instance learning weak supervised learning approach (learning from a few label data). I lead the model design and finetune for this task that I use Pytorch and MLflow 
+
+Code Reference: https://github.com/kt-chan/rj-clam/tree/main
+
+Task 3: knowledge search solution on clinical pathology domain. 
+
+Database modernization:  pathology information systems on posgtresql with wsi binary object path, add gaussvector for embedding search 
+
+Hybrid cloud: model training and batch inference on promise, ad-hoc inference and rag enquiry go cloud for scalability and data privacy compliance
+
+#outcome
+
+
+# case 2: ShenZhen Stock Exchange - 
+
+### Instructions 
+
+Please prepare a 30-minute slide presentation covering the following:
+
+#Real-life Transformation Experience
+
+Share one or more real client examples where you were involved in transforming a legacy data warehouse / database architecture into a cloud-native data architecture supporting AI/ML workloads.
+
+Describe the transformation journey, key challenges faced, and how those challenges were addressed.
+
+#Architecture & Technologies
+
+Explain the technologies used across the data pipeline (ingestion, storage, processing, analytics).
+Where applicable, share an example of a hybrid architecture, where part of the data remained on-premises while the rest was migrated to the cloud.
+
+#AI / ML & Advanced Analytics Use Cases
+
+Describe AI/ML or predictive analytics use cases enabled by this architecture.
+
+Highlight the tools, platforms, and services used to support these use cases.
+
+#Your Role & Hands-on Involvement
+
+Clearly explain your personal role, responsibilities, and level of hands-on contribution across the project.
+
+Share your experience with machine learning or deep learning frameworks, learning algorithms, and your exposure to LLMs and vector search, either within this project or other relevant work.

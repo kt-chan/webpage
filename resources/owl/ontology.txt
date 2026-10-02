@@ -5,11 +5,11 @@
 @prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
 
 <http://example.org/dcspo> a owl:Ontology ;
-    rdfs:label "Debt Collection Sales Pitch Ontology (DCSPO)" ;
-    rdfs:comment "Formal W3C OWL Schema standardizing dialogue, compliance, and negotiation in credit card debt collection." .
+    rdfs:label "Debt Collection Sales Pitch Ontology (DCSPO) - M1 Unemployment Profile" ;
+    rdfs:comment "Formal W3C OWL Ontology mapping dialogue logic, persuasive strategies, compliance constraints, and financial parameters for M1 credit card collection involving unemployment hardship." .
 
 #################################################################
-#    Classes (19 Nodes)
+#    1. CLASSES (19 Nodes)
 #################################################################
 
 dcspo:DialogueStage a owl:Class ; rdfs:label "dialogue_stage" .
@@ -33,7 +33,7 @@ dcspo:CollectionOrganization a owl:Class ; rdfs:subClassOf dcspo:Organization ; 
 dcspo:PaymentPlan a owl:Class ; rdfs:label "payment_plan" .
 
 #################################################################
-#    Object Properties (31 Relations)
+#    2. OBJECT PROPERTIES (31 Relations)
 #################################################################
 
 dcspo:hasNextStage a owl:ObjectProperty ; rdfs:domain dcspo:DialogueStage ; rdfs:range dcspo:DialogueStage .
@@ -50,25 +50,25 @@ dcspo:governsStage a owl:ObjectProperty ; rdfs:domain dcspo:ComplianceRule ; rdf
 dcspo:restrictsStrategy a owl:ObjectProperty ; rdfs:domain dcspo:ComplianceRule ; rdfs:range dcspo:PersuasionStrategy .
 dcspo:participatesIn a owl:ObjectProperty ; rdfs:domain dcspo:CollectionAgent ; rdfs:range dcspo:CollectionCall .
 dcspo:belongsTo a owl:ObjectProperty .
-dcspo:madeBy a owl:ObjectProperty .
+dcspo:madeBy a owl:ObjectProperty ; rdfs:domain dcspo:PaymentCommitment ; rdfs:range dcspo:Debtor .
 dcspo:targetsDebtor a owl:ObjectProperty ; rdfs:domain dcspo:CollectionCall ; rdfs:range dcspo:Debtor .
 dcspo:concernsAccount a owl:ObjectProperty .
-dcspo:causedBy a owl:ObjectProperty ; rdfs:domain dcspo:HardshipEvent .
+dcspo:causedBy a owl:ObjectProperty .
 dcspo:appliedTo a owl:ObjectProperty ; rdfs:domain dcspo:FeeItem ; rdfs:range dcspo:DebtAccount .
 dcspo:acceptedBy a owl:ObjectProperty .
-dcspo:rejectedBy a owl:ObjectProperty .
+dcspo:rejectedBy a owl:ObjectProperty ; rdfs:domain dcspo:SettlementOffer ; rdfs:range dcspo:Debtor .
 dcspo:precedes a owl:ObjectProperty ; rdfs:domain dcspo:SystemEvent ; rdfs:range dcspo:SystemEvent .
 dcspo:follows a owl:ObjectProperty ; rdfs:domain dcspo:SystemEvent ; rdfs:range dcspo:SystemEvent .
-dcspo:reportsTo a owl:ObjectProperty .
-dcspo:generatedBy a owl:ObjectProperty ; rdfs:range dcspo:SystemEvent .
+dcspo:reportsTo a owl:ObjectProperty ; rdfs:domain dcspo:CollectionOrganization ; rdfs:range dcspo:Organization .
+dcspo:generatedBy a owl:ObjectProperty ; rdfs:domain dcspo:SystemEvent ; rdfs:range dcspo:CollectionCall .
 dcspo:includesObligation a owl:ObjectProperty .
 dcspo:hasHardship a owl:ObjectProperty ; rdfs:domain dcspo:Debtor ; rdfs:range dcspo:HardshipEvent .
 dcspo:usesChannel a owl:ObjectProperty ; rdfs:range dcspo:PaymentChannel .
 dcspo:waives a owl:ObjectProperty ; rdfs:domain dcspo:SettlementOffer ; rdfs:range dcspo:FeeItem .
-dcspo:agreedTo a owl:ObjectProperty .
+dcspo:agreedTo a owl:ObjectProperty ; rdfs:domain dcspo:Debtor .
 
 #################################################################
-#    Datatype Properties (58 Attributes)
+#    3. DATATYPE PROPERTIES (58 Attributes)
 #################################################################
 
 dcspo:stageId a owl:DatatypeProperty ; rdfs:domain dcspo:DialogueStage ; rdfs:range xsd:string .
@@ -145,3 +145,203 @@ dcspo:paymentChannel a owl:DatatypeProperty ; rdfs:domain dcspo:PaymentChannel ;
 dcspo:paymentReceiptRequired a owl:DatatypeProperty ; rdfs:domain dcspo:PaymentChannel ; rdfs:range xsd:boolean .
 
 dcspo:installmentPeriodCount a owl:DatatypeProperty ; rdfs:domain dcspo:PaymentPlan ; rdfs:range xsd:integer .
+
+#################################################################
+#    4. FULLY-CONNECTED INSTANCE NETWORK (M1 Unemployment Graph)
+#################################################################
+
+### Institutional Context
+dcspo:Org_CommercialBank_01 a dcspo:Organization ;
+    dcspo:issuer "Bank_Card_Center" .
+
+dcspo:Org_InternalCollectionUnit a dcspo:CollectionOrganization ;
+    dcspo:affiliation "Internal_M1_Operations" ;
+    dcspo:reportsTo dcspo:Org_CommercialBank_01 .
+
+dcspo:Agent_M1_Specialist_01 a dcspo:CollectionAgent ;
+    dcspo:agentId "AGT_88201" ;
+    dcspo:affiliation "Internal_M1_Operations" ;
+    dcspo:serviceAttitude "Professional_Empathetic" ;
+    dcspo:belongsTo dcspo:Org_InternalCollectionUnit ;
+    dcspo:participatesIn dcspo:Call_M1_Session_01 .
+
+### Debtor, Account & Hardship Context
+dcspo:Debtor_M1_Unemployed_01 a dcspo:Debtor ;
+    dcspo:debtorId "DEBTOR_M1_9941" ;
+    dcspo:financialStatus "Zero_Current_Income" ;
+    dcspo:repaymentHistory "Clean_Prior_History" ;
+    dcspo:hasHardship dcspo:Hardship_Unemployment_Involuntary ;
+    dcspo:exhibitsTrait dcspo:Persona_Circumstantial_Anxious ;
+    dcspo:agreedTo dcspo:Commitment_M1_MinimumPayment .
+
+dcspo:Hardship_Unemployment_Involuntary a dcspo:HardshipEvent ;
+    dcspo:hardshipType "Unemployment" ;
+    dcspo:hardshipDuration "2_Months" ;
+    dcspo:cause "Corporate_Downsizing" .
+
+dcspo:Account_CreditCard_M1 a dcspo:DebtAccount ;
+    dcspo:accountNumber "ACC_CC_90821" ;
+    dcspo:accountType "Credit_Card" ;
+    dcspo:overdueBucket "M1" ;
+    dcspo:totalDebtAmount 12500.00 ;
+    dcspo:minimumPayment 1250.00 ;
+    dcspo:dueDate "2026-09-15T00:00:00Z"^^xsd:dateTime .
+
+dcspo:Fee_LateFee_M1 a dcspo:FeeItem ;
+    dcspo:feeType "Late_Payment_Penalty" ;
+    dcspo:feeAmount 150.00 ;
+    dcspo:waiverAmount 0.00 ;
+    dcspo:appliedTo dcspo:Account_CreditCard_M1 .
+
+### Dialogue Progression & Compliance Rules
+dcspo:Stage_01_Opening a dcspo:DialogueStage ;
+    dcspo:stageId "STAGE_OPENING" ;
+    dcspo:sequenceOrder 1 ;
+    dcspo:isMandatory true ;
+    dcspo:stageContent "Identity Verification & Legal Disclosures" ;
+    dcspo:hasNextStage dcspo:Stage_02_HardshipExploration ;
+    dcspo:requiresCompliance dcspo:Rule_Mandatory_Privacy_Disclosure .
+
+dcspo:Stage_02_HardshipExploration a dcspo:DialogueStage ;
+    dcspo:stageId "STAGE_HARDSHIP_EXPLORATION" ;
+    dcspo:sequenceOrder 2 ;
+    dcspo:isMandatory true ;
+    dcspo:stageContent "Identify Unemployment Cause & Financial Inquiries" ;
+    dcspo:hasNextStage dcspo:Stage_03_Negotiation .
+
+dcspo:Stage_03_Negotiation a dcspo:DialogueStage ;
+    dcspo:stageId "STAGE_NEGOTIATION" ;
+    dcspo:sequenceOrder 3 ;
+    dcspo:isMandatory true ;
+    dcspo:stageContent "Propose Minimum Payment & Third-Party Assistance" ;
+    dcspo:hasNextStage dcspo:Stage_04_Commitment .
+
+dcspo:Stage_04_Commitment a dcspo:DialogueStage ;
+    dcspo:stageId "STAGE_COMMITMENT_PTP" ;
+    dcspo:sequenceOrder 4 ;
+    dcspo:isMandatory true ;
+    dcspo:stageContent "Secure PTP and Lock Payment Window" .
+
+dcspo:Rule_Mandatory_Privacy_Disclosure a dcspo:ComplianceRule ;
+    dcspo:ruleId "RULE_CBA_PRIVACY_01" ;
+    dcspo:statutorySource "Banking_Association_Collection_Standards" ;
+    dcspo:isStrict true ;
+    dcspo:triggerCondition "Call_Initiation" ;
+    dcspo:governsStage dcspo:Stage_01_Opening .
+
+dcspo:Rule_M1_Prohibit_Litigation_Threats a dcspo:ComplianceRule ;
+    dcspo:ruleId "RULE_CBIRC_M1_LIMIT" ;
+    dcspo:statutorySource "Consumer_Protection_Act" ;
+    dcspo:isStrict true ;
+    dcspo:triggerCondition "Overdue_Bucket_M1" ;
+    dcspo:restrictsStrategy dcspo:Strategy_Coercive_Authority .
+
+### Behavioral Personas, Objections & Persuasion Strategies
+dcspo:Persona_Circumstantial_Anxious a dcspo:DebtorPersona ;
+    dcspo:personaType "Circumstantial" ;
+    dcspo:emotionalState "Anxious_Cooperative" ;
+    dcspo:riskScore 0.65 ;
+    dcspo:traits "Worried_About_Credit_Background_Check" ;
+    dcspo:susceptibleTo dcspo:Strategy_Credit_Protection_Scarcity .
+
+dcspo:Objection_Unemployment_NoIncome a dcspo:ObjectionCategory ;
+    dcspo:objectionType "Financial_Hardship_Unemployment" ;
+    dcspo:severityLevel "High" ;
+    dcspo:cause "Involuntary_Job_Loss" ;
+    dcspo:triggeredInStage dcspo:Stage_02_HardshipExploration ;
+    dcspo:causedBy dcspo:Hardship_Unemployment_Involuntary ;
+    dcspo:resolvedBy dcspo:Strategy_Credit_Protection_Scarcity , dcspo:Strategy_ThirdParty_Borrowing .
+
+dcspo:Strategy_Empathy_Liking a dcspo:PersuasionStrategy ;
+    dcspo:principleType "Liking" ;
+    dcspo:cognitiveLoad "Low" ;
+    dcspo:alignsWithPersona dcspo:Persona_Circumstantial_Anxious ;
+    dcspo:instantiates dcspo:Pitch_Empathy_Unemployment .
+
+dcspo:Strategy_Credit_Protection_Scarcity a dcspo:PersuasionStrategy ;
+    dcspo:principleType "Scarcity" ;
+    dcspo:cognitiveLoad "Medium" ;
+    dcspo:alignsWithPersona dcspo:Persona_Circumstantial_Anxious ;
+    dcspo:instantiates dcspo:Pitch_Protect_Credit_For_JobSearch .
+
+dcspo:Strategy_ThirdParty_Borrowing a dcspo:PersuasionStrategy ;
+    dcspo:principleType "Reciprocity" ;
+    dcspo:cognitiveLoad "Medium" ;
+    dcspo:instantiates dcspo:Pitch_Minimum_Payment_FamilyBorrow .
+
+dcspo:Strategy_Coercive_Authority a dcspo:PersuasionStrategy ;
+    dcspo:principleType "Authority" ;
+    dcspo:cognitiveLoad "High" .
+
+### Pitch Templates
+dcspo:Pitch_Empathy_Unemployment a dcspo:SalesPitchTemplate ;
+    dcspo:templateId "PITCH_EMP_01" ;
+    dcspo:verbatimScript "I understand job market challenges can be tough. Let's work together to protect your credit record while you re-enter the workforce." ;
+    dcspo:successRate 0.82 ;
+    dcspo:addressesObjection dcspo:Objection_Unemployment_NoIncome ;
+    dcspo:usesStrategy dcspo:Strategy_Empathy_Liking .
+
+dcspo:Pitch_Protect_Credit_For_JobSearch a dcspo:SalesPitchTemplate ;
+    dcspo:templateId "PITCH_SCR_02" ;
+    dcspo:verbatimScript "M1 is your golden window to prevent a permanent credit mark. Many employers conduct background checks, so resolving this minimum balance now protects your future job prospects." ;
+    dcspo:successRate 0.78 ;
+    dcspo:addressesObjection dcspo:Objection_Unemployment_NoIncome ;
+    dcspo:usesStrategy dcspo:Strategy_Credit_Protection_Scarcity .
+
+dcspo:Pitch_Minimum_Payment_FamilyBorrow a dcspo:SalesPitchTemplate ;
+    dcspo:templateId "PITCH_REC_03" ;
+    dcspo:verbatimScript "Since you are currently waiting on unemployment benefits, can you temporarily borrow just the minimum amount of 1250 RMB from a family member to hold your account in good standing?" ;
+    dcspo:successRate 0.71 ;
+    dcspo:addressesObjection dcspo:Objection_Unemployment_NoIncome ;
+    dcspo:usesStrategy dcspo:Strategy_ThirdParty_Borrowing .
+
+### Payment Channel, Plan & Commitment
+dcspo:Channel_MobileBankingApp a dcspo:PaymentChannel ;
+    dcspo:channelType "Digital_App" ;
+    dcspo:paymentChannel "Bank_Mobile_APP" ;
+    dcspo:paymentReceiptRequired true .
+
+dcspo:Plan_M1_MinPay_Extension a dcspo:PaymentPlan ;
+    dcspo:installmentPeriodCount 1 ;
+    dcspo:includesObligation dcspo:Commitment_M1_MinimumPayment ;
+    dcspo:acceptedBy dcspo:Debtor_M1_Unemployed_01 .
+
+dcspo:Offer_M1_HoldWindow a dcspo:SettlementOffer ;
+    dcspo:offerType "Minimum_Payment_Grace_Hold" ;
+    dcspo:offerAmount 1250.00 ;
+    dcspo:offerExpiry "2026-10-03T18:00:00Z"^^xsd:dateTime ;
+    dcspo:offerDuration "24_Hours" ;
+    dcspo:waives dcspo:Fee_LateFee_M1 ;
+    dcspo:acceptedBy dcspo:Debtor_M1_Unemployed_01 ;
+    dcspo:includesObligation dcspo:Commitment_M1_MinimumPayment .
+
+dcspo:Commitment_M1_MinimumPayment a dcspo:PaymentCommitment ;
+    dcspo:promiseAmount 1250.00 ;
+    dcspo:promiseDate "2026-10-03T17:00:00Z"^^xsd:dateTime ;
+    dcspo:commitmentStatus "PTP_Promised" ;
+    dcspo:madeBy dcspo:Debtor_M1_Unemployed_01 ;
+    dcspo:concernsAccount dcspo:Account_CreditCard_M1 ;
+    dcspo:agreedTo dcspo:Debtor_M1_Unemployed_01 .
+
+### Call Execution & System Events
+dcspo:Call_M1_Session_01 a dcspo:CollectionCall ;
+    dcspo:callId "CALL_20261002_00921" ;
+    dcspo:callDate "2026-10-02T17:30:00Z"^^xsd:dateTime ;
+    dcspo:talkTime 245 ;
+    dcspo:callResult "PTP_Secured" ;
+    dcspo:disclosureGiven true ;
+    dcspo:recordingNoticeGiven true ;
+    dcspo:targetsDebtor dcspo:Debtor_M1_Unemployed_01 ;
+    dcspo:concernsAccount dcspo:Account_CreditCard_M1 ;
+    dcspo:usesChannel dcspo:Channel_MobileBankingApp .
+
+dcspo:Event_CallLogged a dcspo:SystemEvent ;
+    dcspo:eventStatus "Completed" ;
+    dcspo:callFrequencyCount 1 ;
+    dcspo:generatedBy dcspo:Call_M1_Session_01 ;
+    dcspo:precedes dcspo:Event_PTP_Reminder_SMS .
+
+dcspo:Event_PTP_Reminder_SMS a dcspo:SystemEvent ;
+    dcspo:eventStatus "Scheduled" ;
+    dcspo:callFrequencyCount 0 ;
+    dcspo:follows dcspo:Event_CallLogged .

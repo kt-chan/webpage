@@ -1,0 +1,147 @@
+@prefix dcspo: <http://example.org/dcspo#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.org/dcspo> a owl:Ontology ;
+    rdfs:label "Debt Collection Sales Pitch Ontology (DCSPO)" ;
+    rdfs:comment "Formal W3C OWL Schema standardizing dialogue, compliance, and negotiation in credit card debt collection." .
+
+#################################################################
+#    Classes (19 Nodes)
+#################################################################
+
+dcspo:DialogueStage a owl:Class ; rdfs:label "dialogue_stage" .
+dcspo:DebtorPersona a owl:Class ; rdfs:label "debtor_persona" .
+dcspo:ObjectionCategory a owl:Class ; rdfs:label "objection_category" .
+dcspo:PersuasionStrategy a owl:Class ; rdfs:label "persuasion_strategy" .
+dcspo:SalesPitchTemplate a owl:Class ; rdfs:label "sales_pitch_template" .
+dcspo:ComplianceRule a owl:Class ; rdfs:label "compliance_rule" .
+dcspo:CollectionCall a owl:Class ; rdfs:label "collection_call" .
+dcspo:CollectionAgent a owl:Class ; rdfs:label "collection_agent" .
+dcspo:Debtor a owl:Class ; rdfs:label "debtor" .
+dcspo:DebtAccount a owl:Class ; rdfs:label "debt_account" .
+dcspo:PaymentCommitment a owl:Class ; rdfs:label "payment_commitment" .
+dcspo:HardshipEvent a owl:Class ; rdfs:label "hardship_event" .
+dcspo:FeeItem a owl:Class ; rdfs:label "fee_item" .
+dcspo:SettlementOffer a owl:Class ; rdfs:label "settlement_offer" .
+dcspo:SystemEvent a owl:Class ; rdfs:label "system_event" .
+dcspo:Organization a owl:Class ; rdfs:label "organization" .
+dcspo:PaymentChannel a owl:Class ; rdfs:label "payment_channel" .
+dcspo:CollectionOrganization a owl:Class ; rdfs:subClassOf dcspo:Organization ; rdfs:label "collection_organization" .
+dcspo:PaymentPlan a owl:Class ; rdfs:label "payment_plan" .
+
+#################################################################
+#    Object Properties (31 Relations)
+#################################################################
+
+dcspo:hasNextStage a owl:ObjectProperty ; rdfs:domain dcspo:DialogueStage ; rdfs:range dcspo:DialogueStage .
+dcspo:requiresCompliance a owl:ObjectProperty ; rdfs:domain dcspo:DialogueStage ; rdfs:range dcspo:ComplianceRule .
+dcspo:exhibitsTrait a owl:ObjectProperty ; rdfs:domain dcspo:Debtor ; rdfs:range dcspo:DebtorPersona .
+dcspo:susceptibleTo a owl:ObjectProperty ; rdfs:domain dcspo:DebtorPersona ; rdfs:range dcspo:PersuasionStrategy .
+dcspo:triggeredInStage a owl:ObjectProperty ; rdfs:domain dcspo:ObjectionCategory ; rdfs:range dcspo:DialogueStage .
+dcspo:resolvedBy a owl:ObjectProperty ; rdfs:domain dcspo:ObjectionCategory ; rdfs:range dcspo:PersuasionStrategy .
+dcspo:alignsWithPersona a owl:ObjectProperty ; rdfs:domain dcspo:PersuasionStrategy ; rdfs:range dcspo:DebtorPersona .
+dcspo:instantiates a owl:ObjectProperty ; rdfs:domain dcspo:PersuasionStrategy ; rdfs:range dcspo:SalesPitchTemplate .
+dcspo:addressesObjection a owl:ObjectProperty ; rdfs:domain dcspo:SalesPitchTemplate ; rdfs:range dcspo:ObjectionCategory .
+dcspo:usesStrategy a owl:ObjectProperty ; rdfs:domain dcspo:SalesPitchTemplate ; rdfs:range dcspo:PersuasionStrategy .
+dcspo:governsStage a owl:ObjectProperty ; rdfs:domain dcspo:ComplianceRule ; rdfs:range dcspo:DialogueStage .
+dcspo:restrictsStrategy a owl:ObjectProperty ; rdfs:domain dcspo:ComplianceRule ; rdfs:range dcspo:PersuasionStrategy .
+dcspo:participatesIn a owl:ObjectProperty ; rdfs:domain dcspo:CollectionAgent ; rdfs:range dcspo:CollectionCall .
+dcspo:belongsTo a owl:ObjectProperty .
+dcspo:madeBy a owl:ObjectProperty .
+dcspo:targetsDebtor a owl:ObjectProperty ; rdfs:domain dcspo:CollectionCall ; rdfs:range dcspo:Debtor .
+dcspo:concernsAccount a owl:ObjectProperty .
+dcspo:causedBy a owl:ObjectProperty ; rdfs:domain dcspo:HardshipEvent .
+dcspo:appliedTo a owl:ObjectProperty ; rdfs:domain dcspo:FeeItem ; rdfs:range dcspo:DebtAccount .
+dcspo:acceptedBy a owl:ObjectProperty .
+dcspo:rejectedBy a owl:ObjectProperty .
+dcspo:precedes a owl:ObjectProperty ; rdfs:domain dcspo:SystemEvent ; rdfs:range dcspo:SystemEvent .
+dcspo:follows a owl:ObjectProperty ; rdfs:domain dcspo:SystemEvent ; rdfs:range dcspo:SystemEvent .
+dcspo:reportsTo a owl:ObjectProperty .
+dcspo:generatedBy a owl:ObjectProperty ; rdfs:range dcspo:SystemEvent .
+dcspo:includesObligation a owl:ObjectProperty .
+dcspo:hasHardship a owl:ObjectProperty ; rdfs:domain dcspo:Debtor ; rdfs:range dcspo:HardshipEvent .
+dcspo:usesChannel a owl:ObjectProperty ; rdfs:range dcspo:PaymentChannel .
+dcspo:waives a owl:ObjectProperty ; rdfs:domain dcspo:SettlementOffer ; rdfs:range dcspo:FeeItem .
+dcspo:agreedTo a owl:ObjectProperty .
+
+#################################################################
+#    Datatype Properties (58 Attributes)
+#################################################################
+
+dcspo:stageId a owl:DatatypeProperty ; rdfs:domain dcspo:DialogueStage ; rdfs:range xsd:string .
+dcspo:sequenceOrder a owl:DatatypeProperty ; rdfs:domain dcspo:DialogueStage ; rdfs:range xsd:integer .
+dcspo:isMandatory a owl:DatatypeProperty ; rdfs:domain dcspo:DialogueStage ; rdfs:range xsd:boolean .
+dcspo:stageContent a owl:DatatypeProperty ; rdfs:domain dcspo:DialogueStage ; rdfs:range xsd:string .
+
+dcspo:personaType a owl:DatatypeProperty ; rdfs:domain dcspo:DebtorPersona ; rdfs:range xsd:string .
+dcspo:emotionalState a owl:DatatypeProperty ; rdfs:domain dcspo:DebtorPersona ; rdfs:range xsd:string .
+dcspo:riskScore a owl:DatatypeProperty ; rdfs:domain dcspo:DebtorPersona ; rdfs:range xsd:decimal .
+dcspo:traits a owl:DatatypeProperty ; rdfs:domain dcspo:DebtorPersona ; rdfs:range xsd:string .
+
+dcspo:objectionType a owl:DatatypeProperty ; rdfs:domain dcspo:ObjectionCategory ; rdfs:range xsd:string .
+dcspo:severityLevel a owl:DatatypeProperty ; rdfs:domain dcspo:ObjectionCategory ; rdfs:range xsd:string .
+dcspo:cause a owl:DatatypeProperty ; rdfs:range xsd:string .
+
+dcspo:principleType a owl:DatatypeProperty ; rdfs:domain dcspo:PersuasionStrategy ; rdfs:range xsd:string .
+dcspo:cognitiveLoad a owl:DatatypeProperty ; rdfs:domain dcspo:PersuasionStrategy ; rdfs:range xsd:string .
+
+dcspo:templateId a owl:DatatypeProperty ; rdfs:domain dcspo:SalesPitchTemplate ; rdfs:range xsd:string .
+dcspo:verbatimScript a owl:DatatypeProperty ; rdfs:domain dcspo:SalesPitchTemplate ; rdfs:range xsd:string .
+dcspo:successRate a owl:DatatypeProperty ; rdfs:domain dcspo:SalesPitchTemplate ; rdfs:range xsd:decimal .
+
+dcspo:ruleId a owl:DatatypeProperty ; rdfs:domain dcspo:ComplianceRule ; rdfs:range xsd:string .
+dcspo:statutorySource a owl:DatatypeProperty ; rdfs:domain dcspo:ComplianceRule ; rdfs:range xsd:string .
+dcspo:isStrict a owl:DatatypeProperty ; rdfs:domain dcspo:ComplianceRule ; rdfs:range xsd:boolean .
+dcspo:triggerCondition a owl:DatatypeProperty ; rdfs:domain dcspo:ComplianceRule ; rdfs:range xsd:string .
+
+dcspo:callId a owl:DatatypeProperty ; rdfs:domain dcspo:CollectionCall ; rdfs:range xsd:string .
+dcspo:callDate a owl:DatatypeProperty ; rdfs:domain dcspo:CollectionCall ; rdfs:range xsd:dateTime .
+dcspo:talkTime a owl:DatatypeProperty ; rdfs:domain dcspo:CollectionCall ; rdfs:range xsd:integer .
+dcspo:callResult a owl:DatatypeProperty ; rdfs:domain dcspo:CollectionCall ; rdfs:range xsd:string .
+dcspo:disclosureGiven a owl:DatatypeProperty ; rdfs:domain dcspo:CollectionCall ; rdfs:range xsd:boolean .
+dcspo:recordingNoticeGiven a owl:DatatypeProperty ; rdfs:domain dcspo:CollectionCall ; rdfs:range xsd:boolean .
+
+dcspo:agentId a owl:DatatypeProperty ; rdfs:domain dcspo:CollectionAgent ; rdfs:range xsd:string .
+dcspo:affiliation a owl:DatatypeProperty ; rdfs:range xsd:string .
+dcspo:serviceAttitude a owl:DatatypeProperty ; rdfs:domain dcspo:CollectionAgent ; rdfs:range xsd:string .
+
+dcspo:debtorId a owl:DatatypeProperty ; rdfs:domain dcspo:Debtor ; rdfs:range xsd:string .
+dcspo:financialStatus a owl:DatatypeProperty ; rdfs:domain dcspo:Debtor ; rdfs:range xsd:string .
+dcspo:repaymentHistory a owl:DatatypeProperty ; rdfs:domain dcspo:Debtor ; rdfs:range xsd:string .
+
+dcspo:accountNumber a owl:DatatypeProperty ; rdfs:domain dcspo:DebtAccount ; rdfs:range xsd:string .
+dcspo:accountType a owl:DatatypeProperty ; rdfs:domain dcspo:DebtAccount ; rdfs:range xsd:string .
+dcspo:overdueBucket a owl:DatatypeProperty ; rdfs:domain dcspo:DebtAccount ; rdfs:range xsd:string .
+dcspo:totalDebtAmount a owl:DatatypeProperty ; rdfs:domain dcspo:DebtAccount ; rdfs:range xsd:decimal .
+dcspo:minimumPayment a owl:DatatypeProperty ; rdfs:domain dcspo:DebtAccount ; rdfs:range xsd:decimal .
+dcspo:dueDate a owl:DatatypeProperty ; rdfs:domain dcspo:DebtAccount ; rdfs:range xsd:dateTime .
+
+dcspo:promiseAmount a owl:DatatypeProperty ; rdfs:domain dcspo:PaymentCommitment ; rdfs:range xsd:decimal .
+dcspo:promiseDate a owl:DatatypeProperty ; rdfs:domain dcspo:PaymentCommitment ; rdfs:range xsd:dateTime .
+dcspo:commitmentStatus a owl:DatatypeProperty ; rdfs:domain dcspo:PaymentCommitment ; rdfs:range xsd:string .
+
+dcspo:hardshipType a owl:DatatypeProperty ; rdfs:domain dcspo:HardshipEvent ; rdfs:range xsd:string .
+dcspo:hardshipDuration a owl:DatatypeProperty ; rdfs:domain dcspo:HardshipEvent ; rdfs:range xsd:string .
+
+dcspo:feeType a owl:DatatypeProperty ; rdfs:domain dcspo:FeeItem ; rdfs:range xsd:string .
+dcspo:feeAmount a owl:DatatypeProperty ; rdfs:domain dcspo:FeeItem ; rdfs:range xsd:decimal .
+dcspo:waiverAmount a owl:DatatypeProperty ; rdfs:domain dcspo:FeeItem ; rdfs:range xsd:decimal .
+
+dcspo:offerType a owl:DatatypeProperty ; rdfs:domain dcspo:SettlementOffer ; rdfs:range xsd:string .
+dcspo:offerAmount a owl:DatatypeProperty ; rdfs:domain dcspo:SettlementOffer ; rdfs:range xsd:decimal .
+dcspo:offerExpiry a owl:DatatypeProperty ; rdfs:domain dcspo:SettlementOffer ; rdfs:range xsd:dateTime .
+dcspo:offerDuration a owl:DatatypeProperty ; rdfs:domain dcspo:SettlementOffer ; rdfs:range xsd:string .
+
+dcspo:eventStatus a owl:DatatypeProperty ; rdfs:domain dcspo:SystemEvent ; rdfs:range xsd:string .
+dcspo:callFrequencyCount a owl:DatatypeProperty ; rdfs:domain dcspo:SystemEvent ; rdfs:range xsd:integer .
+
+dcspo:issuer a owl:DatatypeProperty ; rdfs:domain dcspo:Organization ; rdfs:range xsd:string .
+
+dcspo:channelType a owl:DatatypeProperty ; rdfs:domain dcspo:PaymentChannel ; rdfs:range xsd:string .
+dcspo:paymentChannel a owl:DatatypeProperty ; rdfs:domain dcspo:PaymentChannel ; rdfs:range xsd:string .
+dcspo:paymentReceiptRequired a owl:DatatypeProperty ; rdfs:domain dcspo:PaymentChannel ; rdfs:range xsd:boolean .
+
+dcspo:installmentPeriodCount a owl:DatatypeProperty ; rdfs:domain dcspo:PaymentPlan ; rdfs:range xsd:integer .

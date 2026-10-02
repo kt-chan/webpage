@@ -6,7 +6,7 @@
 
 <http://example.org/dcspo> a owl:Ontology ;
     rdfs:label "Debt Collection Sales Pitch Ontology (DCSPO) - Fully Connected Graph" ;
-    rdfs:comment "Unified W3C OWL Schema with 100% single-component connectivity." .
+    rdfs:comment "Unified W3C OWL Schema with complete connectivity across dialogue, compliance, operational, and financial entities." .
 
 #################################################################
 #    1. CLASSES & HIERARCHY
@@ -40,7 +40,6 @@ dcspo:PaymentPlan a owl:Class ; rdfs:subClassOf dcspo:Agreement ; rdfs:label "pa
 dcspo:AccountActivity a owl:Class ; rdfs:label "account_activity" .
 dcspo:CollectionCall a owl:Class ; rdfs:subClassOf dcspo:AccountActivity ; rdfs:label "collection_call" .
 dcspo:PaymentCommitment a owl:Class ; rdfs:subClassOf dcspo:AccountActivity ; rdfs:label "payment_commitment" .
-dcspo:SystemEvent a owl:Class ; rdfs:subClassOf dcspo:AccountActivity ; rdfs:label "system_event" .
 
 #################################################################
 #    2. OBJECT PROPERTIES (Unified Connectivity)
@@ -72,8 +71,7 @@ dcspo:executedInStage a owl:ObjectProperty ; rdfs:domain dcspo:CollectionCall ; 
 # Account Activity & Debt Connectors
 dcspo:concernsAccount a owl:ObjectProperty ; rdfs:domain dcspo:AccountActivity ; rdfs:range dcspo:DebtAccount .
 
-# Payment Channel Bridges
-dcspo:usesChannel a owl:ObjectProperty ; rdfs:domain dcspo:CollectionCall ; rdfs:range dcspo:PaymentChannel .
+# Payment Channel Bridges (Exclusive to Financial/Settlement Entities)
 dcspo:supportsChannel a owl:ObjectProperty ; rdfs:domain dcspo:DebtAccount ; rdfs:range dcspo:PaymentChannel .
 dcspo:processedVia a owl:ObjectProperty ; rdfs:domain dcspo:PaymentCommitment ; rdfs:range dcspo:PaymentChannel .
 
@@ -88,11 +86,6 @@ dcspo:acceptedBy a owl:ObjectProperty ; rdfs:domain dcspo:Agreement ; rdfs:range
 dcspo:includesObligation a owl:ObjectProperty ; rdfs:domain dcspo:Agreement ; rdfs:range dcspo:PaymentCommitment .
 dcspo:madeBy a owl:ObjectProperty ; rdfs:domain dcspo:PaymentCommitment ; rdfs:range dcspo:Debtor .
 dcspo:agreedTo a owl:ObjectProperty ; rdfs:domain dcspo:Debtor ; rdfs:range dcspo:PaymentCommitment .
-
-# System Workflow Connectors
-dcspo:precedes a owl:ObjectProperty ; rdfs:domain dcspo:SystemEvent ; rdfs:range dcspo:SystemEvent .
-dcspo:follows a owl:ObjectProperty ; rdfs:domain dcspo:SystemEvent ; rdfs:range dcspo:SystemEvent .
-dcspo:generatedBy a owl:ObjectProperty ; rdfs:domain dcspo:SystemEvent ; rdfs:range dcspo:CollectionCall .
 
 #################################################################
 #    3. DATATYPE PROPERTIES
@@ -161,9 +154,6 @@ dcspo:offerType a owl:DatatypeProperty ; rdfs:domain dcspo:SettlementOffer ; rdf
 dcspo:offerAmount a owl:DatatypeProperty ; rdfs:domain dcspo:SettlementOffer ; rdfs:range xsd:decimal .
 dcspo:offerExpiry a owl:DatatypeProperty ; rdfs:domain dcspo:SettlementOffer ; rdfs:range xsd:dateTime .
 dcspo:offerDuration a owl:DatatypeProperty ; rdfs:domain dcspo:SettlementOffer ; rdfs:range xsd:string .
-
-dcspo:eventStatus a owl:DatatypeProperty ; rdfs:domain dcspo:SystemEvent ; rdfs:range xsd:string .
-dcspo:callFrequencyCount a owl:DatatypeProperty ; rdfs:domain dcspo:SystemEvent ; rdfs:range xsd:integer .
 
 dcspo:issuer a owl:DatatypeProperty ; rdfs:domain dcspo:Organization ; rdfs:range xsd:string .
 
@@ -355,18 +345,4 @@ dcspo:Call_M1_Session_01 a dcspo:CollectionCall ;
     dcspo:recordingNoticeGiven true ;
     dcspo:targetsDebtor dcspo:Debtor_M1_Unemployed_01 ;
     dcspo:concernsAccount dcspo:Account_CreditCard_M1 ;
-    dcspo:executedInStage dcspo:Stage_03_Negotiation ;
-    dcspo:usesChannel dcspo:Channel_MobileBankingApp .
-
-dcspo:Event_CallLogged a dcspo:SystemEvent ;
-    dcspo:eventStatus "Completed" ;
-    dcspo:callFrequencyCount 1 ;
-    dcspo:generatedBy dcspo:Call_M1_Session_01 ;
-    dcspo:concernsAccount dcspo:Account_CreditCard_M1 ;
-    dcspo:precedes dcspo:Event_PTP_Reminder_SMS .
-
-dcspo:Event_PTP_Reminder_SMS a dcspo:SystemEvent ;
-    dcspo:eventStatus "Scheduled" ;
-    dcspo:callFrequencyCount 0 ;
-    dcspo:follows dcspo:Event_CallLogged ;
-    dcspo:concernsAccount dcspo:Account_CreditCard_M1 .
+    dcspo:executedInStage dcspo:Stage_03_Negotiation .

@@ -6,10 +6,10 @@
 
 <http://example.org/dcspo> a owl:Ontology ;
     rdfs:label "Debt Collection Sales Pitch Ontology (DCSPO) - Fully Connected Graph" ;
-    rdfs:comment "Unified W3C OWL Schema with complete domain/range connectivity across dialogue, compliance, operational, and financial entities." .
+    rdfs:comment "Unified W3C OWL Schema with 100% single-component connectivity." .
 
 #################################################################
-#    1. CLASSES (19 Nodes - All Connected)
+#    1. CLASSES & HIERARCHY
 #################################################################
 
 dcspo:DialogueStage a owl:Class ; rdfs:label "dialogue_stage" .
@@ -18,24 +18,35 @@ dcspo:ObjectionCategory a owl:Class ; rdfs:label "objection_category" .
 dcspo:PersuasionStrategy a owl:Class ; rdfs:label "persuasion_strategy" .
 dcspo:SalesPitchTemplate a owl:Class ; rdfs:label "sales_pitch_template" .
 dcspo:ComplianceRule a owl:Class ; rdfs:label "compliance_rule" .
-dcspo:CollectionCall a owl:Class ; rdfs:label "collection_call" .
-dcspo:CollectionAgent a owl:Class ; rdfs:label "collection_agent" .
 dcspo:Debtor a owl:Class ; rdfs:label "debtor" .
 dcspo:DebtAccount a owl:Class ; rdfs:label "debt_account" .
-dcspo:PaymentCommitment a owl:Class ; rdfs:label "payment_commitment" .
 dcspo:HardshipEvent a owl:Class ; rdfs:label "hardship_event" .
 dcspo:FeeItem a owl:Class ; rdfs:label "fee_item" .
-dcspo:SettlementOffer a owl:Class ; rdfs:label "settlement_offer" .
-dcspo:SystemEvent a owl:Class ; rdfs:label "system_event" .
 dcspo:Organization a owl:Class ; rdfs:label "organization" .
 dcspo:PaymentChannel a owl:Class ; rdfs:label "payment_channel" .
-dcspo:CollectionOrganization a owl:Class ; rdfs:subClassOf dcspo:Organization ; rdfs:label "collection_organization" .
-dcspo:PaymentPlan a owl:Class ; rdfs:label "payment_plan" .
+
+dcspo:CollectionOrganization a owl:Class ;
+    rdfs:subClassOf dcspo:Organization ;
+    rdfs:label "collection_organization" .
+
+dcspo:CollectionAgent a owl:Class ; rdfs:label "collection_agent" .
+
+# Superclass for Agreement Entities
+dcspo:Agreement a owl:Class ; rdfs:label "agreement" .
+dcspo:SettlementOffer a owl:Class ; rdfs:subClassOf dcspo:Agreement ; rdfs:label "settlement_offer" .
+dcspo:PaymentPlan a owl:Class ; rdfs:subClassOf dcspo:Agreement ; rdfs:label "payment_plan" .
+
+# Superclass for Operational Activities
+dcspo:AccountActivity a owl:Class ; rdfs:label "account_activity" .
+dcspo:CollectionCall a owl:Class ; rdfs:subClassOf dcspo:AccountActivity ; rdfs:label "collection_call" .
+dcspo:PaymentCommitment a owl:Class ; rdfs:subClassOf dcspo:AccountActivity ; rdfs:label "payment_commitment" .
+dcspo:SystemEvent a owl:Class ; rdfs:subClassOf dcspo:AccountActivity ; rdfs:label "system_event" .
 
 #################################################################
-#    2. OBJECT PROPERTIES (Explicit Domains & Ranges)
+#    2. OBJECT PROPERTIES (Unified Connectivity)
 #################################################################
 
+# Dialogue & Strategy Connections
 dcspo:hasNextStage a owl:ObjectProperty ; rdfs:domain dcspo:DialogueStage ; rdfs:range dcspo:DialogueStage .
 dcspo:requiresCompliance a owl:ObjectProperty ; rdfs:domain dcspo:DialogueStage ; rdfs:range dcspo:ComplianceRule .
 dcspo:governsStage a owl:ObjectProperty ; rdfs:domain dcspo:ComplianceRule ; rdfs:range dcspo:DialogueStage .
@@ -49,23 +60,32 @@ dcspo:instantiates a owl:ObjectProperty ; rdfs:domain dcspo:PersuasionStrategy ;
 dcspo:addressesObjection a owl:ObjectProperty ; rdfs:domain dcspo:SalesPitchTemplate ; rdfs:range dcspo:ObjectionCategory .
 dcspo:usesStrategy a owl:ObjectProperty ; rdfs:domain dcspo:SalesPitchTemplate ; rdfs:range dcspo:PersuasionStrategy .
 
-# Operational & Entity Connectors
-dcspo:participatesIn a owl:ObjectProperty ; rdfs:domain dcspo:CollectionAgent ; rdfs:range dcspo:CollectionCall .
-dcspo:belongsTo a owl:ObjectProperty ; rdfs:domain dcspo:CollectionAgent ; rdfs:range dcspo:CollectionOrganization .
+# Organization & Operational Connectors
+dcspo:issuesAccount a owl:ObjectProperty ; rdfs:domain dcspo:Organization ; rdfs:range dcspo:DebtAccount .
+dcspo:managesAccount a owl:ObjectProperty ; rdfs:domain dcspo:CollectionOrganization ; rdfs:range dcspo:DebtAccount .
 dcspo:reportsTo a owl:ObjectProperty ; rdfs:domain dcspo:CollectionOrganization ; rdfs:range dcspo:Organization .
+dcspo:belongsTo a owl:ObjectProperty ; rdfs:domain dcspo:CollectionAgent ; rdfs:range dcspo:CollectionOrganization .
+dcspo:participatesIn a owl:ObjectProperty ; rdfs:domain dcspo:CollectionAgent ; rdfs:range dcspo:CollectionCall .
 dcspo:targetsDebtor a owl:ObjectProperty ; rdfs:domain dcspo:CollectionCall ; rdfs:range dcspo:Debtor .
-dcspo:concernsAccount a owl:ObjectProperty ; rdfs:domain dcspo:CollectionCall ; rdfs:range dcspo:DebtAccount .
 dcspo:executedInStage a owl:ObjectProperty ; rdfs:domain dcspo:CollectionCall ; rdfs:range dcspo:DialogueStage .
-dcspo:usesChannel a owl:ObjectProperty ; rdfs:domain dcspo:CollectionCall ; rdfs:range dcspo:PaymentChannel .
 
-# Financial & Settlement Connectors
+# Account Activity & Debt Connectors
+dcspo:concernsAccount a owl:ObjectProperty ; rdfs:domain dcspo:AccountActivity ; rdfs:range dcspo:DebtAccount .
+
+# Payment Channel Bridges
+dcspo:usesChannel a owl:ObjectProperty ; rdfs:domain dcspo:CollectionCall ; rdfs:range dcspo:PaymentChannel .
+dcspo:supportsChannel a owl:ObjectProperty ; rdfs:domain dcspo:DebtAccount ; rdfs:range dcspo:PaymentChannel .
+dcspo:processedVia a owl:ObjectProperty ; rdfs:domain dcspo:PaymentCommitment ; rdfs:range dcspo:PaymentChannel .
+
+# Hardship & Fee Connectors
 dcspo:hasHardship a owl:ObjectProperty ; rdfs:domain dcspo:Debtor ; rdfs:range dcspo:HardshipEvent .
 dcspo:causedBy a owl:ObjectProperty ; rdfs:domain dcspo:ObjectionCategory ; rdfs:range dcspo:HardshipEvent .
 dcspo:appliedTo a owl:ObjectProperty ; rdfs:domain dcspo:FeeItem ; rdfs:range dcspo:DebtAccount .
 dcspo:waives a owl:ObjectProperty ; rdfs:domain dcspo:SettlementOffer ; rdfs:range dcspo:FeeItem .
-dcspo:acceptedBy a owl:ObjectProperty ; rdfs:domain dcspo:SettlementOffer ; rdfs:range dcspo:Debtor .
-dcspo:rejectedBy a owl:ObjectProperty ; rdfs:domain dcspo:SettlementOffer ; rdfs:range dcspo:Debtor .
-dcspo:includesObligation a owl:ObjectProperty ; rdfs:domain dcspo:PaymentPlan ; rdfs:range dcspo:PaymentCommitment .
+
+# Agreement & Obligation Connectors
+dcspo:acceptedBy a owl:ObjectProperty ; rdfs:domain dcspo:Agreement ; rdfs:range dcspo:Debtor .
+dcspo:includesObligation a owl:ObjectProperty ; rdfs:domain dcspo:Agreement ; rdfs:range dcspo:PaymentCommitment .
 dcspo:madeBy a owl:ObjectProperty ; rdfs:domain dcspo:PaymentCommitment ; rdfs:range dcspo:Debtor .
 dcspo:agreedTo a owl:ObjectProperty ; rdfs:domain dcspo:Debtor ; rdfs:range dcspo:PaymentCommitment .
 
@@ -75,7 +95,7 @@ dcspo:follows a owl:ObjectProperty ; rdfs:domain dcspo:SystemEvent ; rdfs:range 
 dcspo:generatedBy a owl:ObjectProperty ; rdfs:domain dcspo:SystemEvent ; rdfs:range dcspo:CollectionCall .
 
 #################################################################
-#    3. DATATYPE PROPERTIES (58 Attributes)
+#    3. DATATYPE PROPERTIES
 #################################################################
 
 dcspo:stageId a owl:DatatypeProperty ; rdfs:domain dcspo:DialogueStage ; rdfs:range xsd:string .
@@ -90,7 +110,7 @@ dcspo:traits a owl:DatatypeProperty ; rdfs:domain dcspo:DebtorPersona ; rdfs:ran
 
 dcspo:objectionType a owl:DatatypeProperty ; rdfs:domain dcspo:ObjectionCategory ; rdfs:range xsd:string .
 dcspo:severityLevel a owl:DatatypeProperty ; rdfs:domain dcspo:ObjectionCategory ; rdfs:range xsd:string .
-dcspo:cause a owl:DatatypeProperty ; rdfs:range xsd:string .
+dcspo:cause a owl:DatatypeProperty ; rdfs:domain dcspo:ObjectionCategory ; rdfs:range xsd:string .
 
 dcspo:principleType a owl:DatatypeProperty ; rdfs:domain dcspo:PersuasionStrategy ; rdfs:range xsd:string .
 dcspo:cognitiveLoad a owl:DatatypeProperty ; rdfs:domain dcspo:PersuasionStrategy ; rdfs:range xsd:string .
@@ -112,7 +132,7 @@ dcspo:disclosureGiven a owl:DatatypeProperty ; rdfs:domain dcspo:CollectionCall 
 dcspo:recordingNoticeGiven a owl:DatatypeProperty ; rdfs:domain dcspo:CollectionCall ; rdfs:range xsd:boolean .
 
 dcspo:agentId a owl:DatatypeProperty ; rdfs:domain dcspo:CollectionAgent ; rdfs:range xsd:string .
-dcspo:affiliation a owl:DatatypeProperty ; rdfs:range xsd:string .
+dcspo:affiliation a owl:DatatypeProperty ; rdfs:domain dcspo:CollectionOrganization ; rdfs:range xsd:string .
 dcspo:serviceAttitude a owl:DatatypeProperty ; rdfs:domain dcspo:CollectionAgent ; rdfs:range xsd:string .
 
 dcspo:debtorId a owl:DatatypeProperty ; rdfs:domain dcspo:Debtor ; rdfs:range xsd:string .
@@ -154,19 +174,20 @@ dcspo:paymentReceiptRequired a owl:DatatypeProperty ; rdfs:domain dcspo:PaymentC
 dcspo:installmentPeriodCount a owl:DatatypeProperty ; rdfs:domain dcspo:PaymentPlan ; rdfs:range xsd:integer .
 
 #################################################################
-#    4. FULLY CONNECTED INSTANCE EXECUTION GRAPH (ABox)
+#    4. FULLY CONNECTED INSTANCE GRAPH (ABox)
 #################################################################
 
 dcspo:Org_CommercialBank_01 a dcspo:Organization ;
-    dcspo:issuer "Bank_Card_Center" .
+    dcspo:issuer "Bank_Card_Center" ;
+    dcspo:issuesAccount dcspo:Account_CreditCard_M1 .
 
 dcspo:Org_InternalCollectionUnit a dcspo:CollectionOrganization ;
     dcspo:affiliation "Internal_M1_Operations" ;
-    dcspo:reportsTo dcspo:Org_CommercialBank_01 .
+    dcspo:reportsTo dcspo:Org_CommercialBank_01 ;
+    dcspo:managesAccount dcspo:Account_CreditCard_M1 .
 
 dcspo:Agent_M1_Specialist_01 a dcspo:CollectionAgent ;
     dcspo:agentId "AGT_88201" ;
-    dcspo:affiliation "Internal_M1_Operations" ;
     dcspo:serviceAttitude "Professional_Empathetic" ;
     dcspo:belongsTo dcspo:Org_InternalCollectionUnit ;
     dcspo:participatesIn dcspo:Call_M1_Session_01 .
@@ -181,8 +202,7 @@ dcspo:Debtor_M1_Unemployed_01 a dcspo:Debtor ;
 
 dcspo:Hardship_Unemployment_Involuntary a dcspo:HardshipEvent ;
     dcspo:hardshipType "Unemployment" ;
-    dcspo:hardshipDuration "2_Months" ;
-    dcspo:cause "Corporate_Downsizing" .
+    dcspo:hardshipDuration "2_Months" .
 
 dcspo:Account_CreditCard_M1 a dcspo:DebtAccount ;
     dcspo:accountNumber "ACC_CC_90821" ;
@@ -190,7 +210,8 @@ dcspo:Account_CreditCard_M1 a dcspo:DebtAccount ;
     dcspo:overdueBucket "M1" ;
     dcspo:totalDebtAmount 12500.00 ;
     dcspo:minimumPayment 1250.00 ;
-    dcspo:dueDate "2026-09-15T00:00:00Z"^^xsd:dateTime .
+    dcspo:dueDate "2026-09-15T00:00:00Z"^^xsd:dateTime ;
+    dcspo:supportsChannel dcspo:Channel_MobileBankingApp .
 
 dcspo:Fee_LateFee_M1 a dcspo:FeeItem ;
     dcspo:feeType "Late_Payment_Penalty" ;
@@ -323,7 +344,7 @@ dcspo:Commitment_M1_MinimumPayment a dcspo:PaymentCommitment ;
     dcspo:commitmentStatus "PTP_Promised" ;
     dcspo:madeBy dcspo:Debtor_M1_Unemployed_01 ;
     dcspo:concernsAccount dcspo:Account_CreditCard_M1 ;
-    dcspo:agreedTo dcspo:Debtor_M1_Unemployed_01 .
+    dcspo:processedVia dcspo:Channel_MobileBankingApp .
 
 dcspo:Call_M1_Session_01 a dcspo:CollectionCall ;
     dcspo:callId "CALL_20261002_00921" ;
@@ -341,9 +362,11 @@ dcspo:Event_CallLogged a dcspo:SystemEvent ;
     dcspo:eventStatus "Completed" ;
     dcspo:callFrequencyCount 1 ;
     dcspo:generatedBy dcspo:Call_M1_Session_01 ;
+    dcspo:concernsAccount dcspo:Account_CreditCard_M1 ;
     dcspo:precedes dcspo:Event_PTP_Reminder_SMS .
 
 dcspo:Event_PTP_Reminder_SMS a dcspo:SystemEvent ;
     dcspo:eventStatus "Scheduled" ;
     dcspo:callFrequencyCount 0 ;
-    dcspo:follows dcspo:Event_CallLogged .
+    dcspo:follows dcspo:Event_CallLogged ;
+    dcspo:concernsAccount dcspo:Account_CreditCard_M1 .

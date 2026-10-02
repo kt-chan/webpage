@@ -1,30 +1,150 @@
 @prefix m1sop: <http://example.org/ontology/m1-unemployment-sop#> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix xml: <http://www.w3.org/XML/1998/namespace> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@base <http://example.org/ontology/m1-unemployment-sop> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml:   <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@base          <http://example.org/ontology/m1-unemployment-sop> .
 
 <http://example.org/ontology/m1-unemployment-sop> rdf:type owl:Ontology ;
-    rdfs:label "M1-Unemployment Debt Collection SOP Ontology" ;
-    rdfs:comment "Core ontology mapping dialogue logic, compliance, and progression for early-stage involuntary unemployment debt recovery." .
+    rdfs:label "Extended M1-Unemployment Debt Recovery Domain & Dialogue Ontology" ;
+    rdfs:comment "Comprehensive ontology modeling Debtors, Calls, Financial Profiles, Hardships, Promises-to-Pay, and the SOP execution state machine." .
 
-### Classes ###
+#################################################################
+#    Classes
+#################################################################
+
+### Core Actors & Account Entities
+
+m1sop:Party rdf:type owl:Class ;
+    rdfs:label "Party" ;
+    rdfs:comment "Base class for participants in debt collection interactions." .
+
+m1sop:Debtor rdf:type owl:Class ;
+    rdfs:subClassOf m1sop:Party ;
+    rdfs:label "Debtor" ;
+    rdfs:comment "An individual owing an outstanding debt in early-stage (M1) delinquency." .
+
+m1sop:CollectionAgent rdf:type owl:Class ;
+    rdfs:subClassOf m1sop:Party ;
+    rdfs:label "Collection Agent" ;
+    rdfs:comment "Human collector or automated dialogue bot conducting the interaction." .
+
+m1sop:DebtAccount rdf:type owl:Class ;
+    rdfs:label "Debt Account" ;
+    rdfs:comment "The financial obligation record subject to collection." .
+
+### Interaction & Execution Entities
+
+m1sop:Interaction rdf:type owl:Class ;
+    rdfs:label "Interaction" ;
+    rdfs:comment "An operational session or contact event." .
+
+m1sop:Call rdf:type owl:Class ;
+    rdfs:subClassOf m1sop:Interaction ;
+    rdfs:label "Call" ;
+    rdfs:comment "A specific telecommunication dialogue session between an Agent and a Debtor." .
+
+### SOP & Dialogue Governance (State Machine)
 
 m1sop:SOPPhase rdf:type owl:Class ;
-    rdfs:comment "High-level phases of the collection call." .
+    rdfs:label "SOP Phase" ;
+    rdfs:comment "Macro phase of the call workflow." .
 
 m1sop:SOPStage rdf:type owl:Class ;
-    rdfs:comment "Granular conversational states within a phase." .
+    rdfs:label "SOP Stage" ;
+    rdfs:comment "Micro step or dialogue state within an SOP Phase." .
 
 m1sop:ComplianceArtifact rdf:type owl:Class ;
-    rdfs:comment "Regulatory or internal QA requirements (e.g., Mini-Miranda, Empathy Delivery)." .
+    rdfs:label "Compliance Artifact" ;
+    rdfs:comment "Mandatory regulatory or audit proof logged during a call." .
 
-m1sop:DialogueState rdf:type owl:Class ;
-    rdfs:comment "The runtime status of the active call." .
+### Domain Context: Hardship & Financials
 
-### Object Properties ###
+m1sop:HardshipProfile rdf:type owl:Class ;
+    rdfs:label "Hardship Profile" ;
+    rdfs:comment "Reason for payment default." .
+
+m1sop:InvoluntaryUnemploymentHardship rdf:type owl:Class ;
+    rdfs:subClassOf m1sop:HardshipProfile ;
+    rdfs:label "Involuntary Unemployment Hardship" ;
+    rdfs:comment "Job loss due to layoff, business closure, or downsizing." .
+
+m1sop:FinancialHealthProfile rdf:type owl:Class ;
+    rdfs:label "Financial Health Profile" ;
+    rdfs:comment "Assessment of current debtor liquidity and benefit streams." .
+
+### Outcomes & Resolutions
+
+m1sop:CallOutcome rdf:type owl:Class ;
+    rdfs:label "Call Outcome" ;
+    rdfs:comment "Formal resolution or commitment resulting from a Call." .
+
+m1sop:PromiseToPay rdf:type owl:Class ;
+    rdfs:subClassOf m1sop:CallOutcome ;
+    rdfs:label "Promise To Pay (PTP)" ;
+    rdfs:comment "Binding commitment to pay a specified amount on a future date." .
+
+m1sop:MicroCommitment rdf:type owl:Class ;
+    rdfs:subClassOf m1sop:CallOutcome ;
+    rdfs:label "Micro-Commitment" ;
+    rdfs:comment "Non-monetary agreement (e.g., agreeing to provide job status update next week)." .
+
+m1sop:ForbearanceAgreement rdf:type owl:Class ;
+    rdfs:subClassOf m1sop:CallOutcome ;
+    rdfs:label "Forbearance Agreement" ;
+    rdfs:comment "Temporary hold or restructuring granted due to unemployment." .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+### Actor & Account Links
+
+m1sop:hasAccount rdf:type owl:ObjectProperty ;
+    rdfs:domain m1sop:Debtor ;
+    rdfs:range m1sop:DebtAccount .
+
+m1sop:conductedByAgent rdf:type owl:ObjectProperty ;
+    rdfs:domain m1sop:Call ;
+    rdfs:range m1sop:CollectionAgent .
+
+m1sop:hasDebtorParticipant rdf:type owl:ObjectProperty ;
+    rdfs:domain m1sop:Call ;
+    rdfs:range m1sop:Debtor .
+
+m1sop:concernsAccount rdf:type owl:ObjectProperty ;
+    rdfs:domain m1sop:Call ;
+    rdfs:range m1sop:DebtAccount .
+
+### Hardship & Financial Links
+
+m1sop:experiencesHardship rdf:type owl:ObjectProperty ;
+    rdfs:domain m1sop:Debtor ;
+    rdfs:range m1sop:HardshipProfile .
+
+m1sop:evaluatedFinancials rdf:type owl:ObjectProperty ;
+    rdfs:domain m1sop:Call ;
+    rdfs:range m1sop:FinancialHealthProfile .
+
+### Call Execution & SOP Progression Links
+
+m1sop:currentSOPStage rdf:type owl:ObjectProperty ;
+    rdfs:domain m1sop:Call ;
+    rdfs:range m1sop:SOPStage ;
+    rdfs:comment "The real-time stage of the ongoing call." .
+
+m1sop:loggedCompliance rdf:type owl:ObjectProperty ;
+    rdfs:domain m1sop:Call ;
+    rdfs:range m1sop:ComplianceArtifact ;
+    rdfs:comment "Compliance checkpoints satisfied during this specific call." .
+
+m1sop:yieldedOutcome rdf:type owl:ObjectProperty ;
+    rdfs:domain m1sop:Call ;
+    rdfs:range m1sop:CallOutcome .
+
+### SOP Topology (Flow Logic)
 
 m1sop:containsStage rdf:type owl:ObjectProperty ;
     rdfs:domain m1sop:SOPPhase ;
@@ -32,115 +152,78 @@ m1sop:containsStage rdf:type owl:ObjectProperty ;
 
 m1sop:nextStage rdf:type owl:ObjectProperty ;
     rdfs:domain m1sop:SOPStage ;
-    rdfs:range m1sop:SOPStage ;
-    rdfs:comment "The primary success path to the next dialogue node." .
+    rdfs:range m1sop:SOPStage .
 
 m1sop:hasFallbackStage rdf:type owl:ObjectProperty ;
     rdfs:domain m1sop:SOPStage ;
-    rdfs:range m1sop:SOPStage ;
-    rdfs:comment "The pivot path used when an objection or failure occurs." .
+    rdfs:range m1sop:SOPStage .
 
 m1sop:requiresCompliance rdf:type owl:ObjectProperty ;
     rdfs:domain m1sop:SOPStage ;
     rdfs:range m1sop:ComplianceArtifact .
 
-m1sop:triggersState rdf:type owl:ObjectProperty ;
-    rdfs:domain m1sop:SOPStage ;
-    rdfs:range m1sop:DialogueState .
 
-### Data Properties ###
+#################################################################
+#    Data Properties
+#################################################################
 
-m1sop:isMandatory rdf:type owl:DatatypeProperty ;
-    rdfs:domain m1sop:SOPStage ;
+# Debt Account Attributes
+m1sop:accountNumber rdf:type owl:DatatypeProperty ;
+    rdfs:domain m1sop:DebtAccount ;
+    rdfs:range xsd:string .
+
+m1sop:outstandingBalance rdf:type owl:DatatypeProperty ;
+    rdfs:domain m1sop:DebtAccount ;
+    rdfs:range xsd:decimal .
+
+m1sop:daysPastDue rdf:type owl:DatatypeProperty ;
+    rdfs:domain m1sop:DebtAccount ;
+    rdfs:range xsd:integer .
+
+m1sop:delinquencyStage rdf:type owl:DatatypeProperty ;
+    rdfs:domain m1sop:DebtAccount ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Expects 'M1' for 1-30 DPD." .
+
+# Call Meta Data
+m1sop:callStartTime rdf:type owl:DatatypeProperty ;
+    rdfs:domain m1sop:Call ;
+    rdfs:range xsd:dateTime .
+
+m1sop:callEndTime rdf:type owl:DatatypeProperty ;
+    rdfs:domain m1sop:Call ;
+    rdfs:range xsd:dateTime .
+
+m1sop:isVerificationPassed rdf:type owl:DatatypeProperty ;
+    rdfs:domain m1sop:Call ;
     rdfs:range xsd:boolean .
 
-### Individuals: Compliance Artifacts ###
+# Unemployment & Financial Data
+m1sop:terminationDate rdf:type owl:DatatypeProperty ;
+    rdfs:domain m1sop:InvoluntaryUnemploymentHardship ;
+    rdfs:range xsd:date .
 
-m1sop:Req_Verification rdf:type owl:NamedIndividual , m1sop:ComplianceArtifact ;
-    rdfs:label "Right Party Verification Logged" .
+m1sop:isReceivingUIBenefits rdf:type owl:DatatypeProperty ;
+    rdfs:domain m1sop:FinancialHealthProfile ;
+    rdfs:range xsd:boolean .
 
-m1sop:Req_MiniMiranda rdf:type owl:NamedIndividual , m1sop:ComplianceArtifact ;
-    rdfs:label "Federal/State Mini-Miranda Delivered" .
+m1sop:uiBenefitAmount rdf:type owl:DatatypeProperty ;
+    rdfs:domain m1sop:FinancialHealthProfile ;
+    rdfs:range xsd:decimal .
 
-m1sop:Req_Empathy rdf:type owl:NamedIndividual , m1sop:ComplianceArtifact ;
-    rdfs:label "Empathy QA Marker Logged" .
+m1sop:severanceAmount rdf:type owl:DatatypeProperty ;
+    rdfs:domain m1sop:FinancialHealthProfile ;
+    rdfs:range xsd:decimal .
 
-m1sop:Req_ExplicitYes rdf:type owl:NamedIndividual , m1sop:ComplianceArtifact ;
-    rdfs:label "Explicit Verbal Agreement Captured" .
+# PTP Data
+m1sop:ptpAmount rdf:type owl:DatatypeProperty ;
+    rdfs:domain m1sop:PromiseToPay ;
+    rdfs:range xsd:decimal .
 
-### Individuals: Phases ###
+m1sop:ptpDueDate rdf:type owl:DatatypeProperty ;
+    rdfs:domain m1sop:PromiseToPay ;
+    rdfs:range xsd:date .
 
-m1sop:Phase1_Opening rdf:type owl:NamedIndividual , m1sop:SOPPhase ;
-    m1sop:containsStage m1sop:Stage1_1 , m1sop:Stage1_2 , m1sop:Stage1_3 .
-
-m1sop:Phase2_Discovery rdf:type owl:NamedIndividual , m1sop:SOPPhase ;
-    m1sop:containsStage m1sop:Stage2_1 , m1sop:Stage2_2 , m1sop:Stage2_3 .
-
-m1sop:Phase3_Negotiation rdf:type owl:NamedIndividual , m1sop:SOPPhase ;
-    m1sop:containsStage m1sop:Stage3_1 , m1sop:Stage3_2 , m1sop:Stage3_3 .
-
-m1sop:Phase4_Commitment rdf:type owl:NamedIndividual , m1sop:SOPPhase ;
-    m1sop:containsStage m1sop:Stage4_1 , m1sop:Stage4_2 , m1sop:Stage4_3 .
-
-### Individuals: Stages & Dialogue Logic Map ###
-
-# Phase 1
-m1sop:Stage1_1 rdf:type owl:NamedIndividual , m1sop:SOPStage ;
-    rdfs:label "Pre-Call Account Review" ;
-    m1sop:isMandatory "true"^^xsd:boolean ;
-    m1sop:nextStage m1sop:Stage1_2 .
-
-m1sop:Stage1_2 rdf:type owl:NamedIndividual , m1sop:SOPStage ;
-    rdfs:label "RPC & Verification" ;
-    m1sop:requiresCompliance m1sop:Req_Verification ;
-    m1sop:isMandatory "true"^^xsd:boolean ;
-    m1sop:nextStage m1sop:Stage1_3 .
-
-m1sop:Stage1_3 rdf:type owl:NamedIndividual , m1sop:SOPStage ;
-    rdfs:label "Legal Disclosures (Mini-Miranda)" ;
-    m1sop:requiresCompliance m1sop:Req_MiniMiranda ;
-    m1sop:isMandatory "true"^^xsd:boolean ;
-    m1sop:nextStage m1sop:Stage2_1 .
-
-# Phase 2
-m1sop:Stage2_1 rdf:type owl:NamedIndividual , m1sop:SOPStage ;
-    rdfs:label "Empathic Acknowledgment" ;
-    m1sop:requiresCompliance m1sop:Req_Empathy ;
-    m1sop:nextStage m1sop:Stage2_2 .
-
-m1sop:Stage2_2 rdf:type owl:NamedIndividual , m1sop:SOPStage ;
-    rdfs:label "Hardship Deep-Dive (Root Cause)" ;
-    m1sop:nextStage m1sop:Stage2_3 .
-
-m1sop:Stage2_3 rdf:type owl:NamedIndividual , m1sop:SOPStage ;
-    rdfs:label "Financial Health Profiling" ;
-    m1sop:nextStage m1sop:Stage3_1 .
-
-# Phase 3
-m1sop:Stage3_1 rdf:type owl:NamedIndividual , m1sop:SOPStage ;
-    rdfs:label "Benefit & Program Mapping" ;
-    m1sop:nextStage m1sop:Stage3_2 .
-
-m1sop:Stage3_2 rdf:type owl:NamedIndividual , m1sop:SOPStage ;
-    rdfs:label "Collaborative Negotiation" ;
-    m1sop:nextStage m1sop:Stage4_1 ;        # Primary Path: Debtor agrees to a solution
-    m1sop:hasFallbackStage m1sop:Stage3_3 . # Fallback Path: Debtor objects (e.g., zero income)
-
-m1sop:Stage3_3 rdf:type owl:NamedIndividual , m1sop:SOPStage ;
-    rdfs:label "Objection Handling (Zero Income Pivot)" ;
-    m1sop:nextStage m1sop:Stage4_1 ;        # Path back to success: Micro-commitment secured
-    m1sop:hasFallbackStage m1sop:Stage4_3 . # Final Fallback: Refusal, proceed to compliant close
-
-# Phase 4
-m1sop:Stage4_1 rdf:type owl:NamedIndividual , m1sop:SOPStage ;
-    rdfs:label "Securing PTP" ;
-    m1sop:requiresCompliance m1sop:Req_ExplicitYes ;
-    m1sop:nextStage m1sop:Stage4_2 .
-
-m1sop:Stage4_2 rdf:type owl:NamedIndividual , m1sop:SOPStage ;
-    rdfs:label "Contingency Planning" ;
-    m1sop:nextStage m1sop:Stage4_3 .
-
-m1sop:Stage4_3 rdf:type owl:NamedIndividual , m1sop:SOPStage ;
-    rdfs:label "Compliant Close & System Update" ;
-    m1sop:isMandatory "true"^^xsd:boolean .
+m1sop:isAutoPayConfigured rdf:type owl:DatatypeProperty ;
+    rdfs:domain m1sop:PromiseToPay ;
+    rdfs:range xsd:boolean .

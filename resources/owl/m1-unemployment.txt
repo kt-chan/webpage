@@ -1,0 +1,146 @@
+@prefix m1sop: <http://example.org/ontology/m1-unemployment-sop#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://example.org/ontology/m1-unemployment-sop> .
+
+<http://example.org/ontology/m1-unemployment-sop> rdf:type owl:Ontology ;
+    rdfs:label "M1-Unemployment Debt Collection SOP Ontology" ;
+    rdfs:comment "Core ontology mapping dialogue logic, compliance, and progression for early-stage involuntary unemployment debt recovery." .
+
+### Classes ###
+
+m1sop:SOPPhase rdf:type owl:Class ;
+    rdfs:comment "High-level phases of the collection call." .
+
+m1sop:SOPStage rdf:type owl:Class ;
+    rdfs:comment "Granular conversational states within a phase." .
+
+m1sop:ComplianceArtifact rdf:type owl:Class ;
+    rdfs:comment "Regulatory or internal QA requirements (e.g., Mini-Miranda, Empathy Delivery)." .
+
+m1sop:DialogueState rdf:type owl:Class ;
+    rdfs:comment "The runtime status of the active call." .
+
+### Object Properties ###
+
+m1sop:containsStage rdf:type owl:ObjectProperty ;
+    rdfs:domain m1sop:SOPPhase ;
+    rdfs:range m1sop:SOPStage .
+
+m1sop:nextStage rdf:type owl:ObjectProperty ;
+    rdfs:domain m1sop:SOPStage ;
+    rdfs:range m1sop:SOPStage ;
+    rdfs:comment "The primary success path to the next dialogue node." .
+
+m1sop:hasFallbackStage rdf:type owl:ObjectProperty ;
+    rdfs:domain m1sop:SOPStage ;
+    rdfs:range m1sop:SOPStage ;
+    rdfs:comment "The pivot path used when an objection or failure occurs." .
+
+m1sop:requiresCompliance rdf:type owl:ObjectProperty ;
+    rdfs:domain m1sop:SOPStage ;
+    rdfs:range m1sop:ComplianceArtifact .
+
+m1sop:triggersState rdf:type owl:ObjectProperty ;
+    rdfs:domain m1sop:SOPStage ;
+    rdfs:range m1sop:DialogueState .
+
+### Data Properties ###
+
+m1sop:isMandatory rdf:type owl:DatatypeProperty ;
+    rdfs:domain m1sop:SOPStage ;
+    rdfs:range xsd:boolean .
+
+### Individuals: Compliance Artifacts ###
+
+m1sop:Req_Verification rdf:type owl:NamedIndividual , m1sop:ComplianceArtifact ;
+    rdfs:label "Right Party Verification Logged" .
+
+m1sop:Req_MiniMiranda rdf:type owl:NamedIndividual , m1sop:ComplianceArtifact ;
+    rdfs:label "Federal/State Mini-Miranda Delivered" .
+
+m1sop:Req_Empathy rdf:type owl:NamedIndividual , m1sop:ComplianceArtifact ;
+    rdfs:label "Empathy QA Marker Logged" .
+
+m1sop:Req_ExplicitYes rdf:type owl:NamedIndividual , m1sop:ComplianceArtifact ;
+    rdfs:label "Explicit Verbal Agreement Captured" .
+
+### Individuals: Phases ###
+
+m1sop:Phase1_Opening rdf:type owl:NamedIndividual , m1sop:SOPPhase ;
+    m1sop:containsStage m1sop:Stage1_1 , m1sop:Stage1_2 , m1sop:Stage1_3 .
+
+m1sop:Phase2_Discovery rdf:type owl:NamedIndividual , m1sop:SOPPhase ;
+    m1sop:containsStage m1sop:Stage2_1 , m1sop:Stage2_2 , m1sop:Stage2_3 .
+
+m1sop:Phase3_Negotiation rdf:type owl:NamedIndividual , m1sop:SOPPhase ;
+    m1sop:containsStage m1sop:Stage3_1 , m1sop:Stage3_2 , m1sop:Stage3_3 .
+
+m1sop:Phase4_Commitment rdf:type owl:NamedIndividual , m1sop:SOPPhase ;
+    m1sop:containsStage m1sop:Stage4_1 , m1sop:Stage4_2 , m1sop:Stage4_3 .
+
+### Individuals: Stages & Dialogue Logic Map ###
+
+# Phase 1
+m1sop:Stage1_1 rdf:type owl:NamedIndividual , m1sop:SOPStage ;
+    rdfs:label "Pre-Call Account Review" ;
+    m1sop:isMandatory "true"^^xsd:boolean ;
+    m1sop:nextStage m1sop:Stage1_2 .
+
+m1sop:Stage1_2 rdf:type owl:NamedIndividual , m1sop:SOPStage ;
+    rdfs:label "RPC & Verification" ;
+    m1sop:requiresCompliance m1sop:Req_Verification ;
+    m1sop:isMandatory "true"^^xsd:boolean ;
+    m1sop:nextStage m1sop:Stage1_3 .
+
+m1sop:Stage1_3 rdf:type owl:NamedIndividual , m1sop:SOPStage ;
+    rdfs:label "Legal Disclosures (Mini-Miranda)" ;
+    m1sop:requiresCompliance m1sop:Req_MiniMiranda ;
+    m1sop:isMandatory "true"^^xsd:boolean ;
+    m1sop:nextStage m1sop:Stage2_1 .
+
+# Phase 2
+m1sop:Stage2_1 rdf:type owl:NamedIndividual , m1sop:SOPStage ;
+    rdfs:label "Empathic Acknowledgment" ;
+    m1sop:requiresCompliance m1sop:Req_Empathy ;
+    m1sop:nextStage m1sop:Stage2_2 .
+
+m1sop:Stage2_2 rdf:type owl:NamedIndividual , m1sop:SOPStage ;
+    rdfs:label "Hardship Deep-Dive (Root Cause)" ;
+    m1sop:nextStage m1sop:Stage2_3 .
+
+m1sop:Stage2_3 rdf:type owl:NamedIndividual , m1sop:SOPStage ;
+    rdfs:label "Financial Health Profiling" ;
+    m1sop:nextStage m1sop:Stage3_1 .
+
+# Phase 3
+m1sop:Stage3_1 rdf:type owl:NamedIndividual , m1sop:SOPStage ;
+    rdfs:label "Benefit & Program Mapping" ;
+    m1sop:nextStage m1sop:Stage3_2 .
+
+m1sop:Stage3_2 rdf:type owl:NamedIndividual , m1sop:SOPStage ;
+    rdfs:label "Collaborative Negotiation" ;
+    m1sop:nextStage m1sop:Stage4_1 ;        # Primary Path: Debtor agrees to a solution
+    m1sop:hasFallbackStage m1sop:Stage3_3 . # Fallback Path: Debtor objects (e.g., zero income)
+
+m1sop:Stage3_3 rdf:type owl:NamedIndividual , m1sop:SOPStage ;
+    rdfs:label "Objection Handling (Zero Income Pivot)" ;
+    m1sop:nextStage m1sop:Stage4_1 ;        # Path back to success: Micro-commitment secured
+    m1sop:hasFallbackStage m1sop:Stage4_3 . # Final Fallback: Refusal, proceed to compliant close
+
+# Phase 4
+m1sop:Stage4_1 rdf:type owl:NamedIndividual , m1sop:SOPStage ;
+    rdfs:label "Securing PTP" ;
+    m1sop:requiresCompliance m1sop:Req_ExplicitYes ;
+    m1sop:nextStage m1sop:Stage4_2 .
+
+m1sop:Stage4_2 rdf:type owl:NamedIndividual , m1sop:SOPStage ;
+    rdfs:label "Contingency Planning" ;
+    m1sop:nextStage m1sop:Stage4_3 .
+
+m1sop:Stage4_3 rdf:type owl:NamedIndividual , m1sop:SOPStage ;
+    rdfs:label "Compliant Close & System Update" ;
+    m1sop:isMandatory "true"^^xsd:boolean .

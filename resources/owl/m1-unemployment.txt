@@ -7,13 +7,14 @@
 @base          <http://example.org/ontology/m1-unemployment-sop> .
 
 <http://example.org/ontology/m1-unemployment-sop> rdf:type owl:Ontology ;
-    rdfs:label "Fully Connected M1-Unemployment SOP Domain & Workflow Ontology" ;
-    rdfs:comment "Fixes entity isolation by explicitly linking Party/Debtor, DebtAccount, FinancialHealthProfile, and Call interactions." .
+    rdfs:label "Connected Master 7-Stage SOP Ontology with Connected Domain Entities" ;
+    rdfs:comment "Fixed ontology seamlessly linking Debtor, Debt Account, Financial Health Profile, and SOP Dialogue Execution." .
 
 #################################################################
 #    Classes
 #################################################################
 
+### Actors & Domain Entities
 m1sop:Party rdf:type owl:Class ;
     rdfs:label "Party" .
 
@@ -29,81 +30,85 @@ m1sop:DebtAccount rdf:type owl:Class ;
     rdfs:label "Debt Account" .
 
 m1sop:FinancialHealthProfile rdf:type owl:Class ;
-    rdfs:label "Financial Health Profile" .
+    rdfs:label "Financial Health Profile" ;
+    rdfs:comment "Captures income streams, unemployment status, UI benefits, and liquid assets." .
 
+m1sop:ReasonForDelinquency rdf:type owl:Class ;
+    rdfs:label "Reason For Delinquency (RFD)" .
+
+### Interaction & SOP Execution
 m1sop:Call rdf:type owl:Class ;
-    rdfs:label "Call Session" .
+    rdfs:label "Call Interaction Session" .
 
 m1sop:MasterSOPStage rdf:type owl:Class ;
     rdfs:label "Master SOP Stage" .
 
 m1sop:SubStage rdf:type owl:Class ;
-    rdfs:label "Sub-Stage" .
-
-m1sop:ReasonForDelinquency rdf:type owl:Class ;
-    rdfs:label "Reason For Delinquency (RFD)" .
-
-m1sop:CallOutcome rdf:type owl:Class ;
-    rdfs:label "Call Outcome" .
+    rdfs:label "Sub-Stage / Branch Stage" .
 
 m1sop:ComplianceArtifact rdf:type owl:Class ;
     rdfs:label "Compliance Artifact" .
 
+m1sop:CallOutcome rdf:type owl:Class ;
+    rdfs:label "Call Outcome" .
+
+m1sop:PromiseToPay rdf:type owl:Class ;
+    rdfs:subClassOf m1sop:CallOutcome .
+
+m1sop:ForbearanceAgreement rdf:type owl:Class ;
+    rdfs:subClassOf m1sop:CallOutcome .
+
 #################################################################
-#    Object Properties: Connecting Domain Entities
+#    Object Properties (Fixing Entity Connections)
 #################################################################
 
-### 1. Party / Debtor <-> DebtAccount Relationships
+### 1. Connecting Debtor <-> DebtAccount
 m1sop:holdsAccount rdf:type owl:ObjectProperty ;
-    rdfs:domain m1sop:Party ;
+    rdfs:domain m1sop:Debtor ;
     rdfs:range m1sop:DebtAccount ;
-    rdfs:label "holds account" .
+    owl:inverseOf m1sop:accountHeldBy ;
+    rdfs:comment "Links a debtor to their delinquent credit card account." .
 
 m1sop:accountHeldBy rdf:type owl:ObjectProperty ;
-    owl:inverseOf m1sop:holdsAccount ;
     rdfs:domain m1sop:DebtAccount ;
-    rdfs:range m1sop:Party ;
-    rdfs:label "account held by" .
+    rdfs:range m1sop:Debtor .
 
-### 2. Party / Debtor / Account <-> FinancialHealthProfile Relationships
-m1sop:hasFinancialProfile rdf:type owl:ObjectProperty ;
+### 2. Connecting Debtor <-> FinancialHealthProfile
+m1sop:hasFinancialProfile rdf:type owl:ObjectProperty , owl:FunctionalProperty ;
     rdfs:domain m1sop:Debtor ;
     rdfs:range m1sop:FinancialHealthProfile ;
-    rdfs:label "has financial profile" .
+    owl:inverseOf m1sop:profileOfDebtor ;
+    rdfs:comment "Links a debtor to their active financial assessment." .
 
-m1sop:profileBelongsTo rdf:type owl:ObjectProperty ;
-    owl:inverseOf m1sop:hasFinancialProfile ;
+m1sop:profileOfDebtor rdf:type owl:ObjectProperty ;
     rdfs:domain m1sop:FinancialHealthProfile ;
-    rdfs:range m1sop:Debtor ;
-    rdfs:label "profile belongs to" .
+    rdfs:range m1sop:Debtor .
 
-m1sop:accountFinancialProfile rdf:type owl:ObjectProperty ;
+### 3. Connecting DebtAccount <-> FinancialHealthProfile
+m1sop:associatedFinancialProfile rdf:type owl:ObjectProperty ;
     rdfs:domain m1sop:DebtAccount ;
     rdfs:range m1sop:FinancialHealthProfile ;
-    rdfs:label "account financial profile" .
+    rdfs:comment "Associates the financial profile directly to the specific debt account under review." .
 
-### 3. Call Session <-> Domain Entity Traversal
+### 4. Connecting Call Session to Entities
 m1sop:hasDebtorParticipant rdf:type owl:ObjectProperty ;
     rdfs:domain m1sop:Call ;
-    rdfs:range m1sop:Debtor ;
-    rdfs:label "has debtor participant" .
+    rdfs:range m1sop:Debtor .
 
 m1sop:concernsAccount rdf:type owl:ObjectProperty ;
     rdfs:domain m1sop:Call ;
-    rdfs:range m1sop:DebtAccount ;
-    rdfs:label "concerns account" .
+    rdfs:range m1sop:DebtAccount .
+
+m1sop:conductedByAgent rdf:type owl:ObjectProperty ;
+    rdfs:domain m1sop:Call ;
+    rdfs:range m1sop:CollectionAgent .
 
 m1sop:evaluatesFinancialProfile rdf:type owl:ObjectProperty ;
     rdfs:domain m1sop:Call ;
     rdfs:range m1sop:FinancialHealthProfile ;
-    rdfs:label "evaluates financial profile during call" .
+    rdfs:comment "Captures or updates the financial health profile during Stage 3 profiling." .
 
-m1sop:conductedByAgent rdf:type owl:ObjectProperty ;
-    rdfs:domain m1sop:Call ;
-    rdfs:range m1sop:CollectionAgent ;
-    rdfs:label "conducted by agent" .
-
-### 4. Workflow State Mapping
+### 5. Dialogue Execution & SOP Properties
 m1sop:currentMasterStage rdf:type owl:ObjectProperty ;
     rdfs:domain m1sop:Call ;
     rdfs:range m1sop:MasterSOPStage .
@@ -116,6 +121,26 @@ m1sop:detectedRFD rdf:type owl:ObjectProperty ;
     rdfs:domain m1sop:Call ;
     rdfs:range m1sop:ReasonForDelinquency .
 
+m1sop:nextMasterStage rdf:type owl:ObjectProperty ;
+    rdfs:domain m1sop:MasterSOPStage ;
+    rdfs:range m1sop:MasterSOPStage .
+
+m1sop:branchesToSubStage rdf:type owl:ObjectProperty ;
+    rdfs:domain m1sop:MasterSOPStage ;
+    rdfs:range m1sop:SubStage .
+
+m1sop:nextSubStage rdf:type owl:ObjectProperty ;
+    rdfs:domain m1sop:SubStage ;
+    rdfs:range m1sop:SubStage .
+
+m1sop:rejoinsMasterStage rdf:type owl:ObjectProperty ;
+    rdfs:domain m1sop:SubStage ;
+    rdfs:range m1sop:MasterSOPStage .
+
+m1sop:requiresCompliance rdf:type owl:ObjectProperty ;
+    rdfs:domain m1sop:MasterSOPStage ;
+    rdfs:range m1sop:ComplianceArtifact .
+
 m1sop:loggedCompliance rdf:type owl:ObjectProperty ;
     rdfs:domain m1sop:Call ;
     rdfs:range m1sop:ComplianceArtifact .
@@ -125,58 +150,104 @@ m1sop:yieldedOutcome rdf:type owl:ObjectProperty ;
     rdfs:range m1sop:CallOutcome .
 
 #################################################################
-#    Data Properties
+#    Data Properties (Attributes)
 #################################################################
-
-m1sop:accountNumber rdf:type owl:DatatypeProperty ;
-    rdfs:domain m1sop:DebtAccount ;
-    rdfs:range xsd:string .
-
-m1sop:outstandingBalance rdf:type owl:DatatypeProperty ;
-    rdfs:domain m1sop:DebtAccount ;
-    rdfs:range xsd:decimal .
 
 m1sop:isReceivingUIBenefits rdf:type owl:DatatypeProperty ;
     rdfs:domain m1sop:FinancialHealthProfile ;
     rdfs:range xsd:boolean .
 
-m1sop:monthlyUIIncome rdf:type owl:DatatypeProperty ;
+m1sop:monthlySeveranceIncome rdf:type owl:DatatypeProperty ;
     rdfs:domain m1sop:FinancialHealthProfile ;
     rdfs:range xsd:decimal .
 
-m1sop:severanceRemaining rdf:type owl:DatatypeProperty ;
+m1sop:expectedUIStartReceiptDate rdf:type owl:DatatypeProperty ;
     rdfs:domain m1sop:FinancialHealthProfile ;
+    rdfs:range xsd:date .
+
+m1sop:outstandingBalance rdf:type owl:DatatypeProperty ;
+    rdfs:domain m1sop:DebtAccount ;
+    rdfs:range xsd:decimal .
+
+m1sop:openToBuyCredit rdf:type owl:DatatypeProperty ;
+    rdfs:domain m1sop:DebtAccount ;
     rdfs:range xsd:decimal .
 
 #################################################################
-#    Fully Interconnected Individual Instance Network
+#    Individuals: Master SOP Stages
 #################################################################
 
-# Debtor Instance
+m1sop:Stage_1_Opening a m1sop:MasterSOPStage ;
+    rdfs:label "1. Opening with Pre-Call Review" ;
+    m1sop:nextMasterStage m1sop:Stage_2_RPC .
+
+m1sop:Stage_2_RPC a m1sop:MasterSOPStage ;
+    rdfs:label "2. Right Party Contact & Verification" ;
+    m1sop:requiresCompliance m1sop:Req_Verification , m1sop:Req_MiniMiranda ;
+    m1sop:nextMasterStage m1sop:Stage_3_Inquiry .
+
+m1sop:Stage_3_Inquiry a m1sop:MasterSOPStage ;
+    rdfs:label "3. Inquiry & Interaction" ;
+    m1sop:nextMasterStage m1sop:Stage_4_ApplyPressure ;
+    m1sop:branchesToSubStage m1sop:SubStage_3_1_EmpathyPivot .
+
+m1sop:Stage_4_ApplyPressure a m1sop:MasterSOPStage ;
+    rdfs:label "4. Apply Pressure (Risk Realization)" ;
+    m1sop:nextMasterStage m1sop:Stage_5_WorkoutSolution .
+
+m1sop:Stage_5_WorkoutSolution a m1sop:MasterSOPStage ;
+    rdfs:label "5. Workout Solution" ;
+    m1sop:nextMasterStage m1sop:Stage_6_PushPTP .
+
+m1sop:Stage_6_PushPTP a m1sop:MasterSOPStage ;
+    rdfs:label "6. Push to Agree on Promise to Pay" ;
+    m1sop:nextMasterStage m1sop:Stage_7_Closing .
+
+m1sop:Stage_7_Closing a m1sop:MasterSOPStage ;
+    rdfs:label "7. Keep in Touch and Friendly Closing" .
+
+m1sop:SubStage_3_1_EmpathyPivot a m1sop:SubStage ;
+    m1sop:nextSubStage m1sop:SubStage_3_2_FinancialProfiling .
+
+m1sop:SubStage_3_2_FinancialProfiling a m1sop:SubStage ;
+    m1sop:nextSubStage m1sop:SubStage_3_3_CardUtility .
+
+m1sop:SubStage_3_3_CardUtility a m1sop:SubStage ;
+    m1sop:rejoinsMasterStage m1sop:Stage_4_ApplyPressure .
+
+m1sop:RFD_InvoluntaryUnemployment a m1sop:ReasonForDelinquency .
+m1sop:Req_Verification a m1sop:ComplianceArtifact .
+m1sop:Req_MiniMiranda a m1sop:ComplianceArtifact .
+
+#################################################################
+#    Fully Connected Runtime Execution Example
+#################################################################
+
+# 1. Debtor
 m1sop:Debtor_10492 a m1sop:Debtor ;
+    rdfs:label "John Doe" ;
     m1sop:holdsAccount m1sop:Account_88201 ;
-    m1sop:hasFinancialProfile m1sop:FinProfile_10492 .
+    m1sop:hasFinancialProfile m1sop:FinancialProfile_10492 .
 
-# Account Instance
+# 2. Debt Account
 m1sop:Account_88201 a m1sop:DebtAccount ;
-    m1sop:accountNumber "CARD-4491-0021" ;
-    m1sop:outstandingBalance 2450.00 ;
-    m1sop:accountHeldBy m1sop:Debtor_10492 ;
-    m1sop:accountFinancialProfile m1sop:FinProfile_10492 .
+    m1sop:outstandingBalance 1850.00 ;
+    m1sop:openToBuyCredit 3150.00 ;
+    m1sop:associatedFinancialProfile m1sop:FinancialProfile_10492 .
 
-# Financial Health Profile Instance
-m1sop:FinProfile_10492 a m1sop:FinancialHealthProfile ;
-    m1sop:profileBelongsTo m1sop:Debtor_10492 ;
-    m1sop:isReceivingUIBenefits "true"^^xsd:boolean ;
-    m1sop:monthlyUIIncome 1800.00 ;
-    m1sop:severanceRemaining 0.00 .
+# 3. Financial Health Profile (Now explicitly bound to Debtor and Account)
+m1sop:FinancialProfile_10492 a m1sop:FinancialHealthProfile ;
+    m1sop:isReceivingUIBenefits "false"^^xsd:boolean ;
+    m1sop:expectedUIStartReceiptDate "2026-10-22"^^xsd:date ;
+    m1sop:monthlySeveranceIncome 0.00 .
 
-# Active Call Execution Instance Traversing All Entities
+# 4. Live Call Session (Traverses and evaluates all connected nodes)
 m1sop:ActiveCall_9901 a m1sop:Call ;
     m1sop:hasDebtorParticipant m1sop:Debtor_10492 ;
     m1sop:concernsAccount m1sop:Account_88201 ;
-    m1sop:evaluatesFinancialProfile m1sop:FinProfile_10492 ;
+    m1sop:evaluatesFinancialProfile m1sop:FinancialProfile_10492 ;
     m1sop:conductedByAgent m1sop:Agent_Bot_01 ;
+    m1sop:detectedRFD m1sop:RFD_InvoluntaryUnemployment ;
     m1sop:currentMasterStage m1sop:Stage_3_Inquiry ;
     m1sop:currentSubStage m1sop:SubStage_3_2_FinancialProfiling ;
-    m1sop:detectedRFD m1sop:RFD_InvoluntaryUnemployment .
+    m1sop:loggedCompliance m1sop:Req_Verification , m1sop:Req_MiniMiranda .

@@ -172,3 +172,13 @@ m1sop:Req_MiniMiranda rdf:type owl:NamedIndividual , m1sop:ComplianceArtifact ;
 
 m1sop:Req_ExplicitConsent rdf:type owl:NamedIndividual , m1sop:ComplianceArtifact ;
     rdfs:label "Explicit Verbal Consent Captured" .
+
+#################################################################
+#    Runtime Execution Instance Example
+#################################################################
+
+m1sop:ActiveCall_9901 a m1sop:Call ;
+    m1sop:currentMasterStage m1sop:Stage_3_Inquiry ;
+    m1sop:currentSubStage m1sop:SubStage_3_2_FinancialProfiling ;
+    m1sop:detectedRFD m1sop:RFD_InvoluntaryUnemployment ;
+    m1sop:loggedCompliance m1sop:Req_Verification , m1sop:Req_MiniMiranda .
